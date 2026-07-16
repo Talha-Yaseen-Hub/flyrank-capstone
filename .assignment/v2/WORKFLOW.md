@@ -18,7 +18,7 @@ In **Round Two (V2)**, the precise prompt forced a clean MVC/component-based arc
 
 ## Review Effort & AI Mistakes Caught
 - **V1 review**: The review took considerable manual effort. I had to manually spot missing dark mode support, notice that the bio input was unchecked, and identify the lack of modularity (all code was inside a single, tightly-coupled event listener).
-- **V2 review**: Since the precise prompt requested unit tests, the AI produced a test suite (`SettingsForm.test.js`). The tests immediately caught a edge-case bug in the username validator: the regex permitted empty spaces as valid inputs if they were of valid length. I corrected this by refining the alphanumeric regex to `^[a-zA-Z0-9]+$`.
+- **V2 review**: Since the precise prompt requested unit tests, the AI produced a test suite (`SettingsForm.test.js`). The tests immediately caught a ReferenceError in the email validator: the validator code tried to call `emailRegex.test(email)` using an undefined variable `email` instead of the function parameter `value`. The automated test run failed and pointed directly to the line of error, allowing me to instantly fix it to `emailRegex.test(value)` without manual browser debugging.
 
 ## Time Analysis
 - **Round One**: Took ~5 minutes to prompt and write, but review and manual debugging would take ~30 minutes to make production-ready.
