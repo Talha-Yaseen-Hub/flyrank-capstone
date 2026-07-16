@@ -88,16 +88,24 @@ run('npm run test');
 // 5. Commit V2 & Push
 run('git add .');
 run('git commit -m "feat: implement settings form v2 (precise prompt with validation & tests)"');
-run('git push -u origin feat/settings-v2 --force');
-
-// 6. Copy WORKFLOW.md to the root
-if (fs.existsSync(path.join(workspaceDir, 'WORKFLOW.md'))) {
-  fs.copyFileSync(path.join(workspaceDir, 'WORKFLOW.md'), path.join(workspaceDir, 'WORKFLOW.md'));
+run('git push -u origin feat/settings-v2 --force');// 6. Checkout main, copy WORKFLOW.md and update CLAUDE.md guidelines, then push to main
+console.log('\n--- updating main branch with deliverables ---');
+run('git checkout main');
+fs.copyFileSync(path.join(assignmentDir, 'v2', 'WORKFLOW.md'), path.join(workspaceDir, 'WORKFLOW.md'));
+fs.copyFileSync(path.join(assignmentDir, 'v2', 'CLAUDE.md'), path.join(workspaceDir, 'CLAUDE.md'));
+run('git add WORKFLOW.md CLAUDE.md');
+try {
+  run('git commit -m "docs: add WORKFLOW.md and update CLAUDE.md guidelines"');
+  run('git push origin main');
+} catch (e) {
+  console.log('Main branch already has the latest files or no changes to commit.');
 }
+
+// 7. Checkout feat/settings-v2 again for local workspace display
+run('git checkout feat/settings-v2');
 
 console.log('\n--- final workspace status ---');
 run('git status');
-
 console.log('\n======================================================');
 console.log('Success! Both branches created, committed, and pushed!');
 console.log('Branch 1: feat/settings-v1 (vague form)');
