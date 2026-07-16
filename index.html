@@ -3,14 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Settings — Premium UI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>User Settings</title>
     <link rel="stylesheet" href="/src/styles/main.css">
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <h1>User Settings</h1>
+        <form id="settings-form">
+            <div>
+                <label>Username:</label>
+                <input type="text" id="username" placeholder="Enter username">
+            </div>
+            <div>
+                <label>Email:</label>
+                <input type="text" id="email" placeholder="Enter email">
+            </div>
+            <div>
+                <label>Password:</label>
+                <input type="password" id="password" placeholder="Enter new password">
+            </div>
+            <div>
+                <label>Bio:</label>
+                <textarea id="bio" placeholder="Tell us about yourself"></textarea>
+            </div>
+            <div>
+                <label>Theme:</label>
+                <select id="theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="system">System</option>
+                </select>
+            </div>
+            <button type="submit">Save Settings</button>
+        </form>
+        <div id="message"></div>
+    </div>
     <script type="module" src="/src/main.js"></script>
 </body>
 </html>
