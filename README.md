@@ -1,31 +1,41 @@
 <a id="top"></a>
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:6C63FF,50:00C9A7,100:00B4D8&height=200&section=header&text=FlyRankAi%20Capstone%20Project&fontSize=42&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Reactive%20Settings%20Form%20%E2%80%94%20AI-Assisted%20Development%20Workflow&descAlignY=58&descSize=17"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:6C63FF,50:00C9A7,100:00B4D8&height=220&section=header&text=FlyRankAi%20Capstone%20Project&fontSize=44&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Reactive%20Settings%20Form%20%E2%80%94%20AI-Assisted%20Development%20Workflow&descAlignY=58&descSize=17&animation=twinkling"/>
 
-<img src="https://img.shields.io/badge/Internship-FlyRankAi%202026-6C63FF?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Phase-Foundations-00C9A7?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Type-Capstone%20Project-00B4D8?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Status-In%20Progress-FFB703?style=for-the-badge"/>
-
-<br>
-
-<img src="https://img.shields.io/badge/Framework-Vanilla%20JS-lightgrey?style=flat-square"/>
-<img src="https://img.shields.io/badge/Bundler-Vite-lightgrey?style=flat-square"/>
-<img src="https://img.shields.io/badge/Testing-Vitest-lightgrey?style=flat-square"/>
-<img src="https://img.shields.io/badge/Unit%20Tests-16-lightgrey?style=flat-square"/>
-<img src="https://img.shields.io/badge/Accessibility-a11y%20Ready-lightgrey?style=flat-square"/>
-<img src="https://img.shields.io/badge/Prompt%20Variants-2-lightgrey?style=flat-square"/>
-
-<br><br>
+<br/>
 
 <img src="https://readme-typing-svg.demolab.com?font=Poppins&weight=600&size=22&duration=3000&pause=900&color=00C9A7&center=true&vCenter=true&width=850&lines=Reactive+Form+Validation+in+Pure+JavaScript;Light+%2F+Dark+%2F+System+Theme+Persistence;Live+Character+Counting+%26+a11y+States;Comparing+Vague+vs.+Precise+AI+Prompts;Built+for+the+FlyRankAi+Internship"/>
 
 </div>
 
-A hands-on capstone delivered as part of the **FlyRankAi Internship (Foundations Phase)**. The repository centers on a single, deceptively simple UI component — a user settings/profile form — built twice, side by side, to demonstrate how prompt quality changes the shape of AI-assisted code. One version is what you get from a vague request; the other is what you get from a precise one.
+<br/>
 
----
+<div align="center">
+
+| 🏢 Program | 🧭 Phase | 🧩 Deliverable Type | 📌 Status | 👤 Work Type |
+|:---:|:---:|:---:|:---:|:---:|
+| FlyRankAi Internship 2026 | Foundations | Capstone Project | In Progress | Solo |
+
+</div>
+
+<div align="center">
+
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
+<img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
+<img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white"/>
+<img src="https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white"/>
+<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
+<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
+<img src="https://img.shields.io/badge/MIT%20License-3DA639?style=for-the-badge&logo=opensourceinitiative&logoColor=white"/>
+
+</div>
+
+<div align="center">
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00B4D8,100:6C63FF&height=50&section=footer"/>
+</div>
 
 ## 📖 Table of Contents
 
@@ -36,9 +46,11 @@ A hands-on capstone delivered as part of the **FlyRankAi Internship (Foundations
 - [🎯 About This Capstone](#about-capstone)
 - [✨ Features](#features)
 - [🛠️ Technologies Used](#tech)
+- [🧱 Component Architecture](#architecture)
 - [🗂️ Repository Structure](#structure)
 - [🧪 The v1 vs v2 Experiment](#experiment)
 - [🔄 Component State Flows](#states)
+- [📨 Form Submission Sequence](#sequence)
 - [🗺️ Build & Automation Workflow](#workflow)
 - [✅ Testing Strategy](#testing)
 - [🚀 Setup & Execution Instructions](#setup)
@@ -57,7 +69,13 @@ A hands-on capstone delivered as part of the **FlyRankAi Internship (Foundations
 
 **FlyRankAi** is an all-in-one SEO and AI-search optimization platform that combines automated SEO audits, AI-driven content suggestions, keyword tracking, and analytics into a single dashboard — helping brands grow both traditional organic traffic and visibility inside AI-driven search surfaces like ChatGPT, Perplexity, Gemini, and Claude.
 
-This repository is not the platform itself — it's a **capstone exercise from the FlyRankAi internship program**, used to build foundational front-end engineering skills (reactive UI, validation, accessibility, and testing discipline) that feed into the way production features get built at FlyRankAi.
+This repository is **not** the platform itself — it's a capstone exercise from the FlyRankAi internship program, used to build the foundational front-end engineering skills (reactive UI, validation, accessibility, testing discipline) that feed into how production features actually get built at FlyRankAi.
+
+| Aspect | Detail |
+|---|---|
+| 🌐 Product Focus | SEO audits + AI-search visibility, in one dashboard |
+| 🎯 Target Surfaces | Traditional search **and** AI assistants (ChatGPT, Perplexity, Gemini, Claude) |
+| 🧭 This Repo's Role | Internship capstone — not the production platform |
 
 <div align="right"><a href="#top">⬆️ Back to Top</a></div>
 
@@ -66,12 +84,12 @@ This repository is not the platform itself — it's a **capstone exercise from t
 <a id="about-capstone"></a>
 ## 🎯 About This Capstone
 
-The deliverable is a **user settings form** — username, email, password, bio, and a theme preference control — built entirely in vanilla JavaScript with no frameworks. The twist: it's built **twice**, from two different prompts, to make an internal point about how much prompt precision matters when working with AI coding assistants.
+The deliverable is a **user settings form** — username, email, password, bio, and a theme preference control — built entirely in vanilla JavaScript with no frameworks. The twist: it's built **twice**, from two different prompts, to make a measurable point about how much prompt precision changes AI-assisted output.
 
 | Objective | Description |
 |-----------|--------------|
 | 🧩 **Framework-Free Discipline** | Prove that reactive, production-quality UI doesn't require React/Vue — just disciplined vanilla JS |
-| 🔒 **Real-Time Validation** | Give users immediate, specific feedback instead of a single submit-time error dump |
+| ⚡ **Real-Time Validation** | Give users immediate, specific feedback instead of a single submit-time error dump |
 | 🎨 **Persisted Theming** | Respect light / dark / system preference and remember the user's choice across sessions |
 | ♿ **Accessibility by Default** | Every interactive element is screen-reader friendly, not bolted on after the fact |
 | 🧪 **Verifiable Correctness** | Back every validation rule and stateful behavior with an automated test, not just a manual click-through |
@@ -107,17 +125,34 @@ The deliverable is a **user settings form** — username, email, password, bio, 
 | **Vite** | Local dev server with fast HMR, and production bundling |
 | **Vitest** | Automated unit testing in a simulated JSDOM browser environment |
 | **localStorage** | Client-side persistence of theme preference (no backend/database involved) |
-| **Node.js (`build_assignment.cjs` / `.js`)** | Automation script that scaffolds, tests, and pushes the v1/v2 comparison branches |
+| **Node.js** | Runs `build_assignment.cjs` — the automation script that scaffolds, tests, and pushes the v1/v2 comparison branches |
 
-<p align="center">
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
-<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
-<img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
-<img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white"/>
-<img src="https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white"/>
-<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white"/>
-<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
-</p>
+<div align="right"><a href="#top">⬆️ Back to Top</a></div>
+
+---
+
+<a id="architecture"></a>
+## 🧱 Component Architecture
+
+How the pieces of the form talk to each other at runtime:
+
+```mermaid
+flowchart TD
+    U([👤 User Input]) --> F[Settings Form Component]
+    F --> V[Validation Engine]
+    F --> C[Bio Character Counter]
+    F --> T[Theme Controller]
+
+    V -->|valid / invalid| S[Submit Button State]
+    V -->|error messages| A[aria-describedby Text]
+
+    T -->|read/write| L[(localStorage)]
+    T --> R[Root Document Class]
+
+    C -->|count > 160| V
+
+    S --> O([✅ Form Submission])
+```
 
 <div align="right"><a href="#top">⬆️ Back to Top</a></div>
 
@@ -151,13 +186,20 @@ The deliverable is a **user settings form** — username, email, password, bio, 
 
 The `.assignment/` directory is the heart of the exercise: the **same settings form**, built from two different prompt qualities, kept side by side for direct comparison.
 
-| | `.assignment/v1/` — Vague Prompt | `.assignment/v2/` — Precise Prompt |
+| Dimension | `.assignment/v1/` — Vague Prompt | `.assignment/v2/` — Precise Prompt |
 |---|---|---|
 | **Structure** | Minimal, ad-hoc | Fully modular |
 | **Validation** | Basic `alert()`-based | Live, field-level, reactive |
 | **Testing** | None | Full Vitest suite |
 | **Theming** | No dark mode | Light / dark / system, persisted |
 | **Accessibility** | No a11y tags | `aria-describedby`, `aria-invalid`, semantic labeling |
+
+```mermaid
+flowchart LR
+    P1[Vague Prompt] --> V1["v1 Build<br/>alert() validation<br/>no tests, no a11y"]
+    P2[Precise Prompt] --> V2["v2 Build<br/>reactive validation<br/>full test suite, a11y, theming"]
+    V1 -.compared against.-> V2
+```
 
 The point isn't that v1 is "wrong" — it's an honest snapshot of what a vague prompt produces from an AI assistant by default, so the gap to v2 is measurable rather than anecdotal.
 
@@ -202,6 +244,33 @@ stateDiagram-v2
 
 ---
 
+<a id="sequence"></a>
+## 📨 Form Submission Sequence
+
+What happens, in order, from keystroke to a successful submit:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Form as Settings Form
+    participant Val as Validation Engine
+    participant UI as Visual State (border/aria)
+    participant Btn as Submit Button
+
+    User->>Form: Types into a field
+    Form->>Val: Run field validator
+    Val-->>UI: Set valid/invalid state
+    UI-->>Btn: Enable / disable submit
+    User->>Form: All fields valid
+    Form->>Btn: Enable submit
+    User->>Btn: Click Submit
+    Btn-->>User: ✅ Form submitted
+```
+
+<div align="right"><a href="#top">⬆️ Back to Top</a></div>
+
+---
+
 <a id="workflow"></a>
 ## 🗺️ Build & Automation Workflow
 
@@ -230,11 +299,19 @@ flowchart TD
 
 The component ships with **16 Vitest cases** run against a headless JSDOM environment, grouped into three areas:
 
-| Area | What's Covered |
-|------|-----------------|
-| 🔠 **Validation Boundaries** | Username length limits, email format edge cases, password complexity rules (upper/lower/number/symbol), bio 160-character ceiling |
-| 💾 **Storage Interactions** | Correct read/write of theme preference to `localStorage`, fallback behavior when no preference is stored |
-| 🌗 **Theme State Transitions** | Light → Dark → System cycling applies the correct root-level class and persists across a simulated reload |
+| Area | What's Covered | Approx. Share |
+|------|-----------------|:---:|
+| 🔠 **Validation Boundaries** | Username length limits, email format edge cases, password complexity rules, bio 160-character ceiling | ~50% |
+| 💾 **Storage Interactions** | Correct read/write of theme preference to `localStorage`, fallback when nothing is stored | ~25% |
+| 🌗 **Theme State Transitions** | Light → Dark → System cycling applies the correct root class and persists across a simulated reload | ~25% |
+
+```mermaid
+pie showData
+    title Illustrative Test Distribution (16 cases)
+    "Validation Boundaries" : 8
+    "Storage Interactions" : 4
+    "Theme State Transitions" : 4
+```
 
 ```bash
 # Run the full test suite
@@ -323,11 +400,11 @@ FlyRankAi Internship — Foundations Phase Capstone (2026)
 ---
 
 <a id="license"></a>
-## 📜 MIT License
+## 📜 License
 
 <div align="center">
 
-<img src="https://img.shields.io/badge/License-MIT-FFD700?style=for-the-badge&labelColor=1E3C72"/>
+<img src="https://img.shields.io/badge/License-MIT-3DA639?style=for-the-badge&logo=opensourceinitiative&logoColor=white"/>
 
 This project is licensed under the **MIT License** — see the [LICENSE](./LICENSE) file for full details.
 
@@ -352,6 +429,6 @@ If this repository is useful as a reference for prompt-quality comparisons or va
 
 <img src="https://readme-typing-svg.demolab.com?font=Poppins&weight=500&size=18&duration=3000&pause=1000&color=00C9A7&center=true&vCenter=true&width=600&lines=Thanks+for+Reading%21;Keep+Building%2C+Keep+Testing;See+You+in+the+Next+Phase"/>
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:6C63FF,50:00C9A7,100:00B4D8&height=120&section=footer"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:6C63FF,50:00C9A7,100:00B4D8&height=140&section=footer"/>
 
 </div>
