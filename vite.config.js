@@ -1,3 +1,8 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({});
+export default defineConfig({
+  test: {
+    environment: 'jsdom',
+    globals: true,
+  },
+});
