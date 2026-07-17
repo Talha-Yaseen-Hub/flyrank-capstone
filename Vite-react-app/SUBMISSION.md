@@ -3,7 +3,7 @@
 ## 1. Prompts Used
 
 ### Prompt 1: Initial Scaffolding
-> *"Scaffold a modern React task planner application under a subdirectory `homework-react-app`. Include a package.json referencing React, Lucide Icons, and Vite, and configure `vite.config.js` and a mountable `index.html`. Provide clean code structure."*
+> *"Scaffold a modern React task planner application under a subdirectory `Vite-react-app`. Include a package.json referencing React, Lucide Icons, and Vite, and configure `vite.config.js` and a mountable `index.html`. Provide clean code structure."*
 
 ### Prompt 2: Core Components Design
 > *"Implement the UI components for the React task planner. I need three main components: `TaskForm.jsx` for creating tasks with validation, categories, and due dates; `TaskList.jsx` rendering items, displaying colored badges, and editing items inline; and `TaskStats.jsx` showing totals, completed rate, and overdue task alerts."*
@@ -53,7 +53,7 @@ During the review and test phases, I identified several bugs and architectural w
 *   **Correction**: I structured a fallback loader utilizing React state lazy initialization:
     ```javascript
     const [tasks, setTasks] = useState(() => {
-      const saved = localStorage.getItem('homework-tasks');
+      const saved = localStorage.getItem('vite-react-tasks');
       return saved ? JSON.parse(saved) : DEFAULT_TASKS;
     });
     ```

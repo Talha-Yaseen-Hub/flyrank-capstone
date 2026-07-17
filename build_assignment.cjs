@@ -39,7 +39,7 @@ function copyRecursiveSync(src, dest) {
 
 // Clean up generated folders
 function cleanWorkspace() {
-  const keep = ['.git', '.gitignore', 'LICENSE', 'README.md', '.assignment', 'CLAUDE.md', 'build_assignment.cjs', 'node_modules', 'homework-react-app'];
+  const keep = ['.git', '.gitignore', 'LICENSE', 'README.md', '.assignment', 'CLAUDE.md', 'build_assignment.cjs', 'node_modules', 'Vite-react-app'];
   const items = fs.readdirSync(workspaceDir);
   for (const item of items) {
     if (!keep.includes(item)) {

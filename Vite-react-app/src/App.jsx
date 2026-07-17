@@ -37,7 +37,7 @@ const DEFAULT_TASKS = [
 export default function App() {
   // 1. Task State initialization
   const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem('homework-tasks');
+    const saved = localStorage.getItem('vite-react-tasks');
     return saved ? JSON.parse(saved) : DEFAULT_TASKS;
   });
 
@@ -50,13 +50,13 @@ export default function App() {
 
   // 3. Theme states
   const [theme, setTheme] = useState(() => {
-    const saved = localStorage.getItem('app-theme-choice');
+    const saved = localStorage.getItem('vite-react-theme-choice');
     return saved || 'light';
   });
 
   // Sync tasks storage
   useEffect(() => {
-    localStorage.setItem('homework-tasks', JSON.stringify(tasks));
+    localStorage.setItem('vite-react-tasks', JSON.stringify(tasks));
   }, [tasks]);
 
   // Sync Theme preference classes
@@ -67,7 +67,7 @@ export default function App() {
     } else {
       root.classList.remove('dark');
     }
-    localStorage.setItem('app-theme-choice', theme);
+    localStorage.setItem('vite-react-theme-choice', theme);
   }, [theme]);
 
   // Task Operations
