@@ -430,5 +430,3 @@ If this repository is useful as a reference for prompt-quality comparisons or va
 <img src="https://readme-typing-svg.demolab.com?font=Poppins&weight=500&size=18&duration=3000&pause=1000&color=00C9A7&center=true&vCenter=true&width=600&lines=Thanks+for+Reading%21;Keep+Building%2C+Keep+Testing;See+You+in+the+Next+Phase"/>
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:6C63FF,50:00C9A7,100:00B4D8&height=140&section=footer"/>
-
-</div>
