@@ -295,7 +295,7 @@ export default function ChatPage() {
       } else if (codeIdx !== -1) {
         if (codeIdx > 0) parts.push(remaining.substring(0, codeIdx));
         parts.push(
-          <code key={`c-${keyIdx++}`} className="px-1.5 py-0.5 bg-zinc-105 dark:bg-zinc-800 text-emerald-600 dark:text-emerald-450 font-mono text-[10px] rounded">
+          <code key={`c-${keyIdx++}`} className="px-1.5 py-0.5 bg-zinc-100 dark:bg-zinc-800 text-emerald-600 dark:text-emerald-450 font-mono text-[10px] rounded">
             {codeMatch[1]}
           </code>
         );
