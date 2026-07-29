@@ -13,7 +13,8 @@ import {
   Menu, 
   X, 
   Sparkles,
-  Flame
+  Flame,
+  UserCheck
 } from 'lucide-react';
 
 export default function Navigation() {
@@ -26,11 +27,12 @@ export default function Navigation() {
   }, [pathname]);
 
   const navItems = [
-    { href: '/', label: 'Overview', icon: LayoutDashboard },
+    { href: '/', label: 'Personal Brand & Agent', icon: UserCheck, highlight: true },
+    { href: '/dashboard', label: 'SEO Dashboard', icon: LayoutDashboard },
     { href: '/content', label: 'Content Hub', icon: FileText },
     { href: '/seo', label: 'Rank Tracker', icon: Search },
     { href: '/ai-citations', label: 'AI Citation Monitor', icon: Bot },
-    { href: '/chat', label: 'AI Audit Assistant', icon: Sparkles, highlight: true },
+    { href: '/chat', label: 'AI Audit Assistant', icon: Sparkles },
     { href: '/settings', label: 'Settings', icon: Settings },
     { href: '/health', label: 'Health Status', icon: Activity },
   ];

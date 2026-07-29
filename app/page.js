@@ -1,120 +1,422 @@
-import React from 'react';
-import { TrendingUp, Award, Activity, Search, Sparkles } from 'lucide-react';
-import Link from 'next/link';
+'use client';
 
-export default function OverviewPage() {
-  const kpis = [
-    { label: 'Organic Traffic', value: '45,230', change: '+12.4%', color: 'text-emerald-500', icon: TrendingUp },
-    { label: 'Search Visibility', value: '74.2%', change: '+3.1%', color: 'text-blue-500', icon: Search },
-    { label: 'AI Citations Share', value: '18.9%', change: '+5.7%', color: 'text-purple-500', icon: Award },
-    { label: 'Site Health Score', value: '88/100', change: 'Stable', color: 'text-amber-500', icon: Activity },
-  ];
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  Sparkles, 
+  Send, 
+  Square,
+  FileText, 
+  Code, 
+  Calendar, 
+  Mail, 
+  UserCheck, 
+  CheckCircle,
+  Flag,
+  ArrowRight,
+  Monitor,
+  Github,
+  Award,
+  Terminal
+} from 'lucide-react';
+
+export default function PortfolioLandingPage() {
+  // AI Agent Chat State
+  const [messages, setMessages] = useState([
+    {
+      role: 'assistant',
+      content: "Hello! I am Talha Yaseen's Personal AI Representative. Ask me about Talha's skills, coding principles, unit test standards, or how to schedule an interview!",
+      status: 'done'
+    }
+  ]);
+  const [input, setInput] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
+  
+  const chatEndRef = useRef(null);
+  const abortControllerRef = useRef(null);
+
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSend = async (e) => {
+    if (e) e.preventDefault();
+    if (!input.trim() || isGenerating) return;
+
+    const userMsg = { role: 'user', content: input.trim(), status: 'done' };
+    setInput('');
+    setIsGenerating(true);
+
+    setMessages(prev => [...prev, userMsg, { role: 'assistant', content: '', status: 'thinking' }]);
+
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
+          agentType: 'portfolio'
+        }),
+        signal: controller.signal
+      });
+
+      if (!response.ok) throw new Error('API Error');
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let text = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const token = decoder.decode(value);
+        text += token;
+
+        setMessages(prev => {
+          const list = [...prev];
+          const last = list[list.length - 1];
+          if (last && last.role === 'assistant') {
+            last.status = 'streaming';
+            last.content = text;
+          }
+          return list;
+        });
+      }
+
+      setMessages(prev => {
+        const list = [...prev];
+        const last = list[list.length - 1];
+        if (last && last.role === 'assistant') {
+          last.status = 'done';
+        }
+        return list;
+      });
+
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        setMessages(prev => {
+          const list = [...prev];
+          const last = list[list.length - 1];
+          if (last && last.role === 'assistant') last.status = 'stopped';
+          return list;
+        });
+      } else {
+        setMessages(prev => {
+          const list = [...prev];
+          const last = list[list.length - 1];
+          if (last && last.role === 'assistant') {
+            last.status = 'error';
+            last.content = 'I encountered an error connecting to the agent backend. Please try again.';
+          }
+          return list;
+        });
+      }
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleStop = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+  };
 
   return (
-    <div className="space-y-8">
-      {/* Title */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="max-w-5xl mx-auto space-y-16 py-8 px-2">
+      {/* 1. HERO PROFILE SECTION */}
+      <section className="relative overflow-hidden rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-gradient-to-br from-white via-zinc-50 to-emerald-500/5 dark:from-zinc-900 dark:via-zinc-950 dark:to-emerald-500/5 p-8 md:p-12 shadow-md">
+        <div className="absolute right-0 top-0 w-64 h-64 bg-emerald-500/10 dark:bg-emerald-500/5 blur-3xl rounded-full pointer-events-none" />
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div className="space-y-6 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 text-xs font-semibold bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded-full">
+              <Award className="w-3.5 h-3.5" />
+              <span>Front-End & AI Engineer</span>
+            </div>
+            
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-tight font-display">
+              Talha Yaseen
+            </h1>
+
+            <p className="text-lg md:text-xl text-zinc-700 dark:text-zinc-300 leading-relaxed font-light">
+              I build accessible (<span className="text-emerald-500 font-semibold underline decoration-wavy">WCAG AA compliant</span>), responsive React components backed by <span className="text-emerald-500 font-semibold underline decoration-wavy">100% statement-coverage</span> unit tests.
+            </p>
+
+            <div className="flex flex-wrap gap-4 pt-2">
+              <a 
+                href="#agent" 
+                className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white bg-emerald-500 hover:bg-emerald-600 rounded-xl transition-all shadow-md hover:shadow-emerald-500/25 cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Chat with my AI Agent</span>
+              </a>
+              <a 
+                href="#contact" 
+                className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 rounded-xl transition-all cursor-pointer"
+              >
+                <Calendar className="w-4 h-4" />
+                <span>Book a 15-Min Zoom</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Initials Avatar */}
+          <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-gradient-to-tr from-emerald-500 to-teal-600 text-white font-extrabold text-4xl md:text-5xl flex items-center justify-center shadow-lg border-4 border-white dark:border-zinc-900 self-center">
+            TY
+          </div>
+        </div>
+      </section>
+
+      {/* 2. CASE STUDIES (THE PROOF) */}
+      <section className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white font-display">Dashboard Overview</h1>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white font-display">Featured Projects</h2>
           <p className="text-sm text-zinc-550 dark:text-zinc-400 mt-1">
-            Real-time traditional and AI-engine visibility metrics for your website.
+            Production-quality builds demonstrating performance, design integrity, and strict testing.
           </p>
         </div>
-        <Link 
-          href="/chat"
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-emerald-500 rounded-lg hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
-        >
-          <Sparkles className="w-4 h-4" />
-          <span>Start AI SEO Audit</span>
-        </Link>
-      </div>
 
-      {/* KPI Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {kpis.map((kpi, idx) => {
-          const Icon = kpi.icon;
-          return (
-            <div 
-              key={idx} 
-              className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-850 rounded-xl shadow-xs space-y-3"
-            >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Case Study 1: Priority Planner */}
+          <article className="group relative overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between">
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-zinc-450 dark:text-zinc-500 uppercase tracking-wider">
-                  {kpi.label}
-                </span>
-                <Icon className={`w-5 h-5 ${kpi.color}`} />
+                <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest bg-emerald-500/10 dark:bg-emerald-500/5 px-2 py-1 rounded">React Application</span>
+                <a href="/Vite-react-app" target="_blank" className="p-1.5 rounded-lg border border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-650 dark:text-zinc-400">
+                  <Monitor className="w-4 h-4" />
+                </a>
               </div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold text-zinc-900 dark:text-white font-display">
-                  {kpi.value}
-                </span>
-                <span className={`text-xs font-bold ${kpi.change.startsWith('+') ? 'text-emerald-500' : 'text-zinc-450'}`}>
-                  {kpi.change}
-                </span>
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white font-display group-hover:text-emerald-500 transition-colors">
+                The React Priority Planner
+              </h3>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                A task management app addressing timezone offsets on deadlines by resetting evaluations to midnight. Features lazy state storage persistence, layout filtering, and accessible dark mode colors conforming to WCAG AA guidelines.
+              </p>
+              <div className="flex flex-wrap gap-2 text-xs pt-2">
+                <span className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded">React</span>
+                <span className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded">Tailwind CSS</span>
+                <span className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded">Local Storage</span>
               </div>
             </div>
-          );
-        })}
-      </div>
+            
+            <div className="border-t border-zinc-100 dark:border-zinc-800 mt-6 pt-4 flex items-center justify-between">
+              <span className="text-xs font-semibold text-emerald-500 flex items-center gap-1">
+                <CheckCircle className="w-3.5 h-3.5" />
+                <span>Timezone-proof assertions</span>
+              </span>
+              <span className="text-xs text-zinc-400 flex items-center gap-1">
+                View Code <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </div>
+          </article>
 
-      {/* Detailed Reports Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Case Study 2: MVC Settings Form */}
+          <article className="group relative overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest bg-indigo-500/10 dark:bg-indigo-500/5 px-2 py-1 rounded">Vanilla JS MVC</span>
+                <a href="/playground" target="_blank" className="p-1.5 rounded-lg border border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-650 dark:text-zinc-400">
+                  <Monitor className="w-4 h-4" />
+                </a>
+              </div>
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white font-display group-hover:text-indigo-500 transition-colors">
+                Accessible MVC Settings Form
+              </h3>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                A framework-free settings form proving semantic accessibility without bloat. Connects labels, updates live validation errors to screen readers dynamically using <code className="text-xs text-indigo-500 font-mono">aria-describedby</code>, and locks invalid submits.
+              </p>
+              <div className="flex flex-wrap gap-2 text-xs pt-2">
+                <span className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded">ES6+ JavaScript</span>
+                <span className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded">Vitest (16 Cases)</span>
+                <span className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded">JSDOM</span>
+              </div>
+            </div>
+
+            <div className="border-t border-zinc-100 dark:border-zinc-850 mt-6 pt-4 flex items-center justify-between">
+              <span className="text-xs font-semibold text-indigo-500 flex items-center gap-1">
+                <CheckCircle className="w-3.5 h-3.5" />
+                <span>16 automated unit tests</span>
+              </span>
+              <span className="text-xs text-zinc-400 flex items-center gap-1">
+                View Code <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      {/* 3. TECHNICAL VALUES & PHILOSOPHY */}
+      <section className="p-8 bg-zinc-50 dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-800/80 rounded-2xl grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="space-y-2">
+          <div className="p-2 bg-emerald-500/10 text-emerald-500 rounded-lg w-fit"><Code className="w-5 h-5" /></div>
+          <h4 className="font-bold text-zinc-900 dark:text-white font-display">Semantic HTML First</h4>
+          <p className="text-xs text-zinc-550 dark:text-zinc-400 leading-relaxed">
+            Prioritize native browser elements over heavy custom handlers. This guarantees baseline keyboard functionality and ensures high speed.
+          </p>
+        </div>
+        <div className="space-y-2">
+          <div className="p-2 bg-indigo-500/10 text-indigo-500 rounded-lg w-fit"><Terminal className="w-5 h-5" /></div>
+          <h4 className="font-bold text-zinc-900 dark:text-white font-display">Test-Driven Safety</h4>
+          <p className="text-xs text-zinc-550 dark:text-zinc-400 leading-relaxed">
+            Every critical state transition and validation boundary is backed by unit tests. If a behavior cannot be assertively verified, it is not production-ready.
+          </p>
+        </div>
+        <div className="space-y-2">
+          <div className="p-2 bg-purple-500/10 text-purple-500 rounded-lg w-fit"><Sparkles className="w-5 h-5" /></div>
+          <h4 className="font-bold text-zinc-900 dark:text-white font-display">AI As a Collaborator</h4>
+          <p className="text-xs text-zinc-550 dark:text-zinc-400 leading-relaxed">
+            Use structured prompt ladders to leverage AI efficiency. I treat LLMs as review partners to catch edge cases, rather than blindly copy-pasting code templates.
+          </p>
+        </div>
+      </section>
+
+      {/* 4. THE PERSONAL AI AGENT (THE AGENT) */}
+      <section id="agent" className="grid grid-cols-1 lg:grid-cols-3 gap-8 border border-zinc-200 dark:border-zinc-800 rounded-3xl bg-white dark:bg-zinc-950 overflow-hidden shadow-md">
         
-        {/* Trafffic chart panel mock */}
-        <div className="lg:col-span-2 p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-850 rounded-xl space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-zinc-900 dark:text-white">Organic Traffic Trend</h2>
-            <select className="text-xs border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-emerald-500">
-              <option>Last 30 Days</option>
-              <option>Last 3 Months</option>
-              <option>Last Year</option>
-            </select>
+        {/* Left Side: Agent Bio & Context */}
+        <div className="p-8 bg-zinc-50 dark:bg-zinc-900/50 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-zinc-200 dark:border-zinc-800">
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+              </span>
+              <span className="text-xs font-bold text-emerald-500 uppercase tracking-widest bg-transparent">Agent Active</span>
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="text-2xl font-extrabold text-zinc-900 dark:text-white font-display">Talha's AI Representative</h3>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                This personal AI assistant is trained on my technical profile, design constraints, and project case studies. Ask it to evaluate my skills or pressure-test my work logic.
+              </p>
+            </div>
+            
+            <div className="space-y-2.5">
+              <span className="text-xs font-bold text-zinc-450 dark:text-zinc-500 uppercase block">Sample Prompts:</span>
+              {[
+                "Why should we hire Talha?",
+                "Tell me about Talha's testing standards.",
+                "Detail the React Planner case study."
+              ].map((p, idx) => (
+                <button 
+                  key={idx}
+                  onClick={() => setInput(p)}
+                  className="w-full text-left p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs text-zinc-700 dark:text-zinc-300 hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors"
+                >
+                  {p}
+                </button>
+              ))}
+            </div>
           </div>
-          
-          {/* Simulated chart */}
-          <div className="h-64 flex items-end justify-between gap-2 pt-4">
-            {[40, 55, 45, 60, 75, 50, 70, 85, 90, 80, 95, 100].map((val, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center">
-                <div className="w-full h-48 flex items-end bg-transparent">
-                  <div 
-                    style={{ height: `${val}%` }} 
-                    className="w-full bg-emerald-500/20 dark:bg-emerald-500/10 hover:bg-emerald-500/45 rounded-xs transition-colors relative group"
-                  >
-                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-zinc-900 dark:bg-zinc-800 text-white text-[10px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10 shadow-sm">
-                      {val * 450} visits
-                    </div>
+
+          <div className="mt-8 pt-4 border-t border-zinc-200 dark:border-zinc-800 text-[10px] text-zinc-400">
+            Powered by Gemini-1.5-Flash via FlyRank AI API.
+          </div>
+        </div>
+
+        {/* Right Side: Chat Dialog Panel */}
+        <div className="lg:col-span-2 flex flex-col h-[500px]">
+          <div className="p-4 bg-zinc-50/50 dark:bg-zinc-900/10 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+            <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Representative Chat Stream</span>
+            {isGenerating && (
+              <button 
+                onClick={handleStop}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium border border-red-200 hover:bg-red-50 text-red-600 dark:border-red-950/30 dark:hover:bg-red-950/20 dark:text-red-400 rounded-lg transition"
+              >
+                <Square className="w-3 h-3 fill-current" />
+                <span>Stop Stream</span>
+              </button>
+            )}
+          </div>
+
+          {/* Messages Container */}
+          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            {messages.map((m, idx) => {
+              const isUser = m.role === 'user';
+              return (
+                <div key={idx} className={`flex items-start gap-3 ${isUser ? 'flex-row-reverse' : ''}`}>
+                  <div className={`w-8 h-8 rounded-lg shrink-0 flex items-center justify-center text-xs font-bold ${
+                    isUser ? 'bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200' : 'bg-emerald-500 text-white'
+                  }`}>
+                    {isUser ? 'U' : 'AI'}
+                  </div>
+                  <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+                    isUser 
+                      ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-tr-none'
+                      : 'bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 rounded-tl-none'
+                  }`}>
+                    {m.status === 'thinking' ? (
+                      <span className="flex items-center gap-1.5 text-zinc-400 text-xs py-1">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        Thinking...
+                      </span>
+                    ) : (
+                      <div className="whitespace-pre-line prose prose-sm dark:prose-invert max-w-none">
+                        {m.content}
+                      </div>
+                    )}
                   </div>
                 </div>
-                <span className="text-[10px] text-zinc-400 mt-2">M{i+1}</span>
-              </div>
-            ))}
+              );
+            })}
+            <div ref={chatEndRef} />
           </div>
-        </div>
 
-        {/* Action checklist mock */}
-        <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-850 rounded-xl space-y-4">
-          <h2 className="text-lg font-bold text-zinc-900 dark:text-white">Audit Tasks Alert</h2>
-          <p className="text-xs text-zinc-500">Actions suggested by our AI Audit Engine.</p>
-          
-          <div className="space-y-3 pt-2">
-            {[
-              { text: 'Add structured JSON-LD data to product templates', label: 'Schema', color: 'bg-red-500/10 text-red-500' },
-              { text: 'Deploy an llms.txt at root for AI crawlers info', label: 'AI Bots', color: 'bg-purple-500/10 text-purple-500' },
-              { text: 'Resolve meta description lengths on 12 key blogs', label: 'Meta', color: 'bg-amber-500/10 text-amber-500' },
-            ].map((task, idx) => (
-              <div key={idx} className="flex items-start gap-3 p-3 bg-zinc-50 dark:bg-zinc-900/50 hover:bg-zinc-100 dark:hover:bg-zinc-800/55 rounded-lg border border-zinc-100 dark:border-zinc-850 transition-colors">
-                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${task.color} shrink-0 uppercase tracking-wider`}>
-                  {task.label}
-                </span>
-                <p className="text-xs text-zinc-650 dark:text-zinc-300 leading-tight">
-                  {task.text}
-                </p>
-              </div>
-            ))}
-          </div>
+          {/* Input Form Panel */}
+          <form onSubmit={handleSend} className="p-4 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50/20 dark:bg-zinc-950/20 flex gap-2">
+            <input
+              type="text"
+              placeholder="Ask me a question about Talha..."
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              className="flex-1 px-4 py-2.5 text-sm border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-zinc-900 dark:text-white"
+            />
+            <button
+              type="submit"
+              disabled={isGenerating || !input.trim()}
+              className="px-4 py-2.5 bg-emerald-500 text-white hover:bg-emerald-600 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center"
+            >
+              <Send className="w-4 h-4" />
+            </button>
+          </form>
         </div>
+      </section>
 
-      </div>
+      {/* 5. CONTACT & CALL TO ACTION */}
+      <section id="contact" className="p-8 border border-zinc-200 dark:border-zinc-800 rounded-3xl bg-zinc-50 dark:bg-zinc-900/30 text-center max-w-2xl mx-auto space-y-6">
+        <Mail className="w-10 h-10 text-emerald-500 mx-auto" />
+        <h3 className="text-2xl font-bold text-zinc-900 dark:text-white font-display">Schedule an Intro Call</h3>
+        <p className="text-sm text-zinc-650 dark:text-zinc-400 leading-relaxed">
+          Looking for a developer who writes secure, tested code instead of copying generic templates? Let's spend 15 minutes reviewing my unit test coverage or running Vitest locally.
+        </p>
+        
+        <div className="pt-2 flex flex-col sm:flex-row gap-4 justify-center">
+          <a 
+            href="mailto:talha@example.com" 
+            className="inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-white bg-zinc-900 hover:bg-zinc-800 dark:bg-emerald-500 dark:hover:bg-emerald-600 rounded-xl transition cursor-pointer shadow-md"
+          >
+            <Mail className="w-4 h-4" />
+            <span>talha@example.com</span>
+          </a>
+          <button 
+            onClick={() => alert("Bookings scheduled directly via Cal.com / Calendly integrations. Placeholder activated.")}
+            className="inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 rounded-xl transition cursor-pointer"
+          >
+            <Calendar className="w-4 h-4" />
+            <span>Select Date & Time</span>
+          </button>
+        </div>
+      </section>
     </div>
   );
 }
