@@ -2,9 +2,25 @@ import { AI_CONFIG, formatGeminiMessages } from '@/lib/ai-config';
 
 export const dynamic = 'force-dynamic';
 
+const PORTFOLIO_AGENT_INSTRUCTION = `You are the AI Career Agent and Technical Representative for Talha Yaseen, a talented Front-End & AI Engineer Intern at FlyRank.
+Your goal is to represent Talha professionally to Technical Leads, Engineering Managers, and potential collaborators.
+
+Talha's Profile & Claim:
+- Claim: Builds accessible (WCAG AA compliant), responsive React components backed by 100% statement-coverage unit tests.
+- Skills: React, Next.js, Vanilla JS (ES6+), Vitest, Tailwind CSS, Web Accessibility (a11y), AI toolkits.
+- Projects: 
+  1. React Priority Planner: timezone-proof deadline checks, reactive indicators, local storage.
+  2. Vanilla JS MVC Settings Form: live field validation, aria-describedby accessibility connection, 16 unit tests.
+- Call to Action: Invite the visitor to book a 15-minute call with Talha to review his code.
+
+Rules:
+1. Speak directly, technically, and concisely. No marketing fluff.
+2. Answer questions about Talha's coding methodologies, project details, accessibility focus, and work credentials.
+3. Keep the target CTA active: encourage booking a call.`;
+
 export async function POST(req) {
   try {
-    const { messages } = await req.json();
+    const { messages, agentType } = await req.json();
     if (!messages || !Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: 'Invalid messages body' }), {
         status: 400,
@@ -17,10 +33,11 @@ export async function POST(req) {
     // Fallback: If no API key is provided, return a simulated stream so the UI is fully testable.
     if (!apiKey || apiKey === 'your_gemini_api_key_here') {
       console.warn('GEMINI_API_KEY is not set. Falling back to simulated streaming.');
-      return handleSimulatedStream(messages);
+      return handleSimulatedStream(messages, agentType);
     }
 
     const formattedContents = formatGeminiMessages(messages);
+    const systemPrompt = agentType === 'portfolio' ? PORTFOLIO_AGENT_INSTRUCTION : AI_CONFIG.systemInstruction;
 
     // Call the Google Gemini API stream endpoint
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${AI_CONFIG.modelName}:streamGenerateContent?key=${apiKey}`;
@@ -33,7 +50,7 @@ export async function POST(req) {
       body: JSON.stringify({
         contents: formattedContents,
         systemInstruction: {
-          parts: [{ text: AI_CONFIG.systemInstruction }],
+          parts: [{ text: systemPrompt }],
         },
         generationConfig: {
           temperature: AI_CONFIG.temperature,
@@ -133,13 +150,33 @@ export async function POST(req) {
 
 /**
  * Handles simulated stream when no API Key is present.
- * Generates an SEO audit checklist chunk by chunk to preview UI features.
+ * Generates responses depending on agentType.
  */
-function handleSimulatedStream(messages) {
+function handleSimulatedStream(messages, agentType) {
   const lastMessage = messages[messages.length - 1]?.content || '';
   const encoder = new TextEncoder();
 
-  const responseText = `### FlyRank SEO Audit Recommendations
+  let responseText = '';
+
+  if (agentType === 'portfolio') {
+    responseText = `### Talha Yaseen's AI Representative (Career Agent)
+
+Hello! I am Talha's personal Career & Technical AI representative. I can answer questions about Talha's front-end expertise, access details about his recent builds, or help you book a call with him.
+
+Since this dashboard is in **Preview Mode** (without a live \`GEMINI_API_KEY\`), here is a summary of the value Talha brings to front-end teams:
+
+1. **Accessibility Focus:** Builds products according to **WCAG AA** guidelines from scratch (semantic HTML, focus traps, dynamic \`aria-describedby\` attributes).
+2. **Rigor & Testing:** Backs validation routines with comprehensive **Vitest test suites** running in headless DOMs to capture edge cases before deployments.
+3. **AI Fluency Stack:** Experienced with prompt design ladders, custom context injections, and connecting Large Language Models to web interfaces.
+
+#### Featured Projects in Talha's Portfolio:
+- **React Priority Planner:** Includes timezone-safe date comparison checks and persisted client settings.
+- **Modular MVC Settings Form:** Implements real-time field regex validators and active screen reader warning prompts.
+
+**Call to Action:** 
+If you are looking to hire a disciplined developer, let's schedule a 15-minute intro Zoom call! We can walk through these repositories and run test suites live. Let me know what questions you have about Talha's skills!`;
+  } else {
+    responseText = `### FlyRank SEO Audit Recommendations
 
 Here is a live simulation of my SEO audit feedback for your request: **"${lastMessage}"**. 
 
@@ -158,6 +195,7 @@ Since no server-side \`GEMINI_API_KEY\` was detected in the environment variable
 3. **Draft Robot Rules**: Allow visibility for search engines but restrict raw scraping of your database.
 
 Feel free to ask follow-up questions! The **Stop** button and **Auto-scroll lock** controls will function exactly as they would with a live endpoint connection.`;
+  }
 
   // Split responseText into tokens to stream
   const tokens = responseText.split(/(\s+)/);
