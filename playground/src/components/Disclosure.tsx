@@ -38,7 +38,7 @@ export function Disclosure({ label, children, defaultOpen = false }: DisclosureP
       <div
         id={panelId}
         hidden={!isOpen}
-        className={`px-4 py-3 border-t border-zinc-200 dark:border-zinc-800 text-sm text-zinc-650 dark:text-zinc-400 bg-white dark:bg-zinc-900 transition-all ${
+        className={`px-4 py-3 border-t border-zinc-200 dark:border-zinc-800 text-sm text-zinc-600 dark:text-zinc-400 bg-white dark:bg-zinc-900 transition-all ${
           isOpen ? 'block' : 'hidden'
         }`}
       >

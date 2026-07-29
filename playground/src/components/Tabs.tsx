@@ -95,7 +95,7 @@ export function Tabs({ items, defaultValue, label }: TabsProps) {
               aria-labelledby={`tab-trigger-${item.id}`}
               tabIndex={0}
               hidden={!isActive}
-              className={`p-4 bg-zinc-50 dark:bg-zinc-900/50 rounded-md border border-zinc-200 dark:border-zinc-850 focus:outline-none focus:ring-2 focus:ring-primary ${
+              className={`p-4 bg-zinc-50 dark:bg-zinc-900/50 rounded-md border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:ring-2 focus:ring-primary ${
                 isActive ? 'block' : 'hidden'
               }`}
             >

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Modal } from './components/Modal'
 import { Tabs } from './components/Tabs'
 import { Disclosure } from './components/Disclosure'
@@ -40,7 +40,7 @@ export default function App() {
       content: (
         <div className="space-y-2">
           <h4 className="font-semibold text-zinc-900 dark:text-zinc-50">Search Engine Visibility</h4>
-          <p className="text-sm text-zinc-650 dark:text-zinc-400">
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
             Automate structured data injections and content alignment for search surfaces like ChatGPT and Perplexity.
           </p>
           <div className="pt-2">
@@ -57,7 +57,7 @@ export default function App() {
       content: (
         <div className="space-y-2">
           <h4 className="font-semibold text-zinc-900 dark:text-zinc-50">Keyword Performance</h4>
-          <p className="text-sm text-zinc-650 dark:text-zinc-400">
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
             Monitor real-time SERP rankings. Detect keyword cannibalization and find low-hanging optimization opportunities.
           </p>
           <div className="flex gap-2 pt-2">
@@ -80,7 +80,7 @@ export default function App() {
       content: (
         <div className="space-y-2">
           <h4 className="font-semibold text-zinc-900 dark:text-zinc-50">Audit Engine Health</h4>
-          <p className="text-sm text-zinc-650 dark:text-zinc-400">
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
             Verification status: <span className="text-emerald-500 font-semibold">Active</span>. Dynamic content analyzer operational.
           </p>
           <div className="p-3 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 rounded text-xs">
@@ -122,7 +122,7 @@ export default function App() {
               <ShieldAlert className="w-5 h-5 text-primary" />
               <h2 className="text-lg font-bold">1. Modal Dialog (Focus Trap & Escape)</h2>
             </div>
-            <p className="text-sm text-zinc-550 dark:text-zinc-400">
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
               ARIA APG requirements: trapping focus within active modal, locking body scrolling, ESC to close, and restoring focus to trigger upon closure.
             </p>
 
@@ -174,7 +174,7 @@ export default function App() {
                 </p>
                 <div className="space-y-3">
                   <div>
-                    <label htmlFor="modal-name" className="block text-xs font-semibold text-zinc-550 dark:text-zinc-400 mb-1">
+                    <label htmlFor="modal-name" className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-1">
                       Full Name
                     </label>
                     <input
@@ -185,7 +185,7 @@ export default function App() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="modal-role" className="block text-xs font-semibold text-zinc-550 dark:text-zinc-400 mb-1">
+                    <label htmlFor="modal-role" className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-1">
                       Account Role
                     </label>
                     <select
@@ -222,7 +222,7 @@ export default function App() {
               <Keyboard className="w-5 h-5 text-primary" />
               <h2 className="text-lg font-bold">2. Disclosure (Keyboard Trigger)</h2>
             </div>
-            <p className="text-sm text-zinc-550 dark:text-zinc-400">
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
               ARIA APG requirements: button trigger with dynamic `aria-expanded` and `aria-controls` linked to the panel ID, operated with Space or Enter keys.
             </p>
 
@@ -244,7 +244,7 @@ export default function App() {
             <Terminal className="w-5 h-5 text-primary" />
             <h2 className="text-lg font-bold">3. Tabs (Arrow Navigation & Focus Control)</h2>
           </div>
-          <p className="text-sm text-zinc-550 dark:text-zinc-400">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">
             ARIA APG requirements: container `role="tablist"`, active tab has `tabIndex={0}`, inactive tabs have `tabIndex={-1}`. Left/Right Arrow keys navigate and activate tabs automatically; Home/End jump to boundaries.
           </p>
 
