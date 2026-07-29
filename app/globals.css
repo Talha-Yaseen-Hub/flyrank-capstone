@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 224 71.4% 4.1%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    
+    --primary: 142.1 76.2% 36.3%; /* Emerald green */
+    --primary-foreground: 355.7 100% 97.3%;
+    
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    
+    --border: 220 13% 91%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 224 71.4% 4.1%; /* Slate-950 equivalent */
+    --foreground: 210 20% 98%;
+    
+    --card: 224 71.4% 6%;
+    --card-foreground: 210 20% 98%;
+    
+    --primary: 142.1 70.6% 45.3%;
+    --primary-foreground: 144.9 80.7% 10%;
+    
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    
+    --muted: 217.9 10.6% 16.2%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    
+    --accent: 217.9 10.6% 16.2%;
+    --accent-foreground: 210 20% 98%;
+    
+    --border: 215 27.9% 16.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+}
+
+/* Slide animations for mobile sidebar drawer */
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.animate-slide-in {
+  animation: slide-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Pulse animation for thinking state */
+@keyframes pulse-light {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.animate-pulse-light {
+  animation: pulse-light 1.5s ease-in-out infinite;
+}
