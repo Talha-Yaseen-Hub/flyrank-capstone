@@ -74,16 +74,18 @@ export default function OverviewPage() {
           {/* Simulated chart */}
           <div className="h-64 flex items-end justify-between gap-2 pt-4">
             {[40, 55, 45, 60, 75, 50, 70, 85, 90, 80, 95, 100].map((val, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center gap-2">
-                <div 
-                  style={{ height: `${val}%` }} 
-                  className="w-full bg-emerald-500/20 dark:bg-emerald-500/10 hover:bg-emerald-500/45 rounded-xs transition-colors relative group"
-                >
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-zinc-900 text-white text-[10px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                    {val * 450} visits
+              <div key={i} className="flex-1 flex flex-col items-center">
+                <div className="w-full h-48 flex items-end bg-transparent">
+                  <div 
+                    style={{ height: `${val}%` }} 
+                    className="w-full bg-emerald-500/20 dark:bg-emerald-500/10 hover:bg-emerald-500/45 rounded-xs transition-colors relative group"
+                  >
+                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-zinc-900 dark:bg-zinc-800 text-white text-[10px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10 shadow-sm">
+                      {val * 450} visits
+                    </div>
                   </div>
                 </div>
-                <span className="text-[10px] text-zinc-400">M{i+1}</span>
+                <span className="text-[10px] text-zinc-400 mt-2">M{i+1}</span>
               </div>
             ))}
           </div>
