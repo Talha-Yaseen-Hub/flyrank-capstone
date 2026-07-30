@@ -1,4 +1,4 @@
-import { AI_CONFIG, formatGeminiMessages } from '@/lib/ai-config';
+import { AI_CONFIG } from '@/lib/ai-config';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,47 +28,80 @@ export async function POST(req) {
       });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const claudeKey = process.env.CLAUDE_API_KEY;
+    const geminiKey = process.env.GEMINI_API_KEY;
+    
+    const systemPrompt = agentType === 'portfolio' ? PORTFOLIO_AGENT_INSTRUCTION : AI_CONFIG.systemInstruction;
+    let fullText = '';
 
-    // Fallback: If no API key is provided, return a simulated stream so the UI is fully testable.
-    if (!apiKey || apiKey === 'your_gemini_api_key_here') {
-      console.warn('GEMINI_API_KEY is not set. Falling back to simulated streaming.');
+    // Route 1: Anthropic Claude API
+    if (claudeKey && claudeKey !== 'your_claude_api_key_here') {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'x-api-key': claudeKey,
+          'anthropic-version': '2023-06-01',
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'claude-3-5-sonnet-20240620',
+          max_tokens: 1024,
+          system: systemPrompt,
+          messages: messages.map(m => ({ role: m.role, content: m.content }))
+        })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        fullText = result.content?.[0]?.text || 'No response generated.';
+      } else {
+        const errText = await response.text();
+        console.error('Claude API Error:', errText);
+        throw new Error(`Claude API Error: ${response.status}`);
+      }
+    }
+    // Route 2: Gemini API Fallback
+    else if (geminiKey && geminiKey !== 'your_gemini_api_key_here') {
+      // Map messages to Gemini format
+      const formattedContents = messages.map((m) => {
+        const role = m.role === 'assistant' ? 'model' : 'user';
+        return {
+          role: role,
+          parts: [{ text: m.content }],
+        };
+      });
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${AI_CONFIG.modelName}:generateContent?key=${geminiKey}`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: formattedContents,
+          systemInstruction: {
+            parts: [{ text: systemPrompt }],
+          },
+          generationConfig: {
+            temperature: AI_CONFIG.temperature,
+            maxOutputTokens: AI_CONFIG.maxOutputTokens,
+          },
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        fullText = result.candidates?.[0]?.content?.parts?.[0]?.text || 'No response generated.';
+      } else {
+        const errText = await response.text();
+        console.error('Gemini API Error:', errText);
+        throw new Error(`Gemini API Error: ${response.status}`);
+      }
+    }
+    // Route 3: Preview Simulation Fallback
+    else {
       return handleSimulatedStream(messages, agentType);
     }
-
-    const formattedContents = formatGeminiMessages(messages);
-    const systemPrompt = agentType === 'portfolio' ? PORTFOLIO_AGENT_INSTRUCTION : AI_CONFIG.systemInstruction;
-
-    // Call the Google Gemini API generateContent endpoint
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${AI_CONFIG.modelName}:generateContent?key=${apiKey}`;
-    
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents: formattedContents,
-        systemInstruction: {
-          parts: [{ text: systemPrompt }],
-        },
-        generationConfig: {
-          temperature: AI_CONFIG.temperature,
-          maxOutputTokens: AI_CONFIG.maxOutputTokens,
-        },
-      }),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      return new Response(JSON.stringify({ error: 'Gemini API Error', details: errorText }), {
-        status: response.status,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-
-    const result = await response.json();
-    const fullText = result.candidates?.[0]?.content?.parts?.[0]?.text || 'No response generated.';
 
     const encoder = new TextEncoder();
     const tokens = fullText.split(/(\s+)/);
@@ -128,7 +161,7 @@ Here is why Talha is a valuable addition to your engineering team:
 
 1. **Accessible Frontend Engineering:** Talha doesn't just build visual grids; he builds semantic layouts matching **WCAG AA accessibility guidelines** (keyboard navigation focus traps, explicit labels, dynamic \`aria-describedby\` announcements).
 2. **Automated Testing Rigor:** Every complex state transition and regex form validator Talha writes is verified by comprehensive **Vitest unit test suites** running in headless DOMs.
-3. **Practical AI Fluency:** Talha understands prompt engineering layers, LLM context integration, and can safely orchestrate AI agents for content and code audits.
+3. **Practical AI Fluency:** Talha understands prompt engineering layers, LLM context integration, and can safely orchestrate AI agents for code audits.
 4. **Self-Started Execution:** Completed all weekly capstone milestones at FlyRank ahead of schedule, shipping production code to Vercel.
 
 **Call to Action:** Let's schedule a 15-minute intro Zoom call to run his Vitest code live!`;
@@ -163,7 +196,7 @@ Let me know if you need any other details!`;
 
 Hello! I am Talha's personal Career & Technical AI representative. I can answer questions about Talha's front-end expertise, access details about his recent builds, or help you book a call with him.
 
-Since this dashboard is currently in **Preview Mode** (without a live \`GEMINI_API_KEY\`), I am responding using localized context.
+Since this dashboard is currently in **Preview Mode** (without a live \`GEMINI_API_KEY\` or \`CLAUDE_API_KEY\`), I am responding using localized context.
 
 *   Try asking: *"Why should we hire Talha?"* or *"Tell me about Talha's projects"* to see detailed case studies!
 
@@ -175,7 +208,7 @@ If you are looking to hire a disciplined developer, let's schedule a 15-minute i
 
 Here is a live simulation of my SEO audit feedback for your request: **"${messages[messages.length - 1]?.content || ''}"**. 
 
-Since no server-side \`GEMINI_API_KEY\` was detected in the environment variables, I am running in **Preview Simulation Mode**. Here is an actionable checklist:
+Since no server-side \`CLAUDE_API_KEY\` or \`GEMINI_API_KEY\` was detected in the environment variables, I am running in **Preview Simulation Mode**. Here is an actionable checklist:
 
 | Audit Category | Current Score | Priority Action |
 | :--- | :--- | :--- |
