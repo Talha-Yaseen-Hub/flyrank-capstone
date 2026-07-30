@@ -39,8 +39,8 @@ export async function POST(req) {
     const formattedContents = formatGeminiMessages(messages);
     const systemPrompt = agentType === 'portfolio' ? PORTFOLIO_AGENT_INSTRUCTION : AI_CONFIG.systemInstruction;
 
-    // Call the Google Gemini API stream endpoint
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${AI_CONFIG.modelName}:streamGenerateContent?key=${apiKey}`;
+    // Call the Google Gemini API generateContent endpoint
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${AI_CONFIG.modelName}:generateContent?key=${apiKey}`;
     
     const response = await fetch(url, {
       method: 'POST',
@@ -67,68 +67,30 @@ export async function POST(req) {
       });
     }
 
+    const result = await response.json();
+    const fullText = result.candidates?.[0]?.content?.parts?.[0]?.text || 'No response generated.';
+
     const encoder = new TextEncoder();
-    const decoder = new TextDecoder();
+    const tokens = fullText.split(/(\s+)/);
     
     const stream = new ReadableStream({
       async start(controller) {
-        const reader = response.body.getReader();
-        let buffer = '';
-
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            buffer += decoder.decode(value, { stream: true });
-            
-            // Gemini streams dynamic JSON arrays or objects separated by newlines or list markers
-            // We parse complete JSON blocks to stream text back
-            let boundaryIndex;
-            while ((boundaryIndex = buffer.indexOf('\n')) !== -1) {
-              const line = buffer.substring(0, boundaryIndex).trim();
-              buffer = buffer.substring(boundaryIndex + 1);
-
-              if (line.startsWith('[') || line.startsWith(',')) continue;
-              
-              let cleanLine = line;
-              if (cleanLine.endsWith(']')) {
-                cleanLine = cleanLine.substring(0, cleanLine.length - 1);
-              }
-              if (cleanLine.startsWith('{') && cleanLine.endsWith('}')) {
-                try {
-                  const data = JSON.parse(cleanLine);
-                  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                  if (text) {
-                    controller.enqueue(encoder.encode(text));
-                  }
-                } catch (_) {
-                  // Ignore JSON parse errors for incomplete buffer lines
-                }
-              }
-            }
-          }
-
-          // Handle any leftover buffer
-          if (buffer.trim()) {
+        let i = 0;
+        const interval = setInterval(() => {
+          if (i < tokens.length) {
             try {
-              // Strip trailing comma/array markers if any
-              let cleanBuffer = buffer.trim();
-              if (cleanBuffer.startsWith(',')) cleanBuffer = cleanBuffer.substring(1);
-              if (cleanBuffer.endsWith(']')) cleanBuffer = cleanBuffer.substring(0, cleanBuffer.length - 1);
-              
-              const data = JSON.parse(cleanBuffer);
-              const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-              if (text) {
-                controller.enqueue(encoder.encode(text));
-              }
-            } catch (_) {}
+              controller.enqueue(encoder.encode(tokens[i]));
+              i++;
+            } catch (err) {
+              clearInterval(interval);
+            }
+          } else {
+            clearInterval(interval);
+            try {
+              controller.close();
+            } catch (err) {}
           }
-        } catch (err) {
-          controller.error(err);
-        } finally {
-          controller.close();
-        }
+        }, 30); // Send one token every 30ms for smooth stream typing animation
       },
     });
 
@@ -153,32 +115,65 @@ export async function POST(req) {
  * Generates responses depending on agentType.
  */
 function handleSimulatedStream(messages, agentType) {
-  const lastMessage = messages[messages.length - 1]?.content || '';
+  const lastMessage = (messages[messages.length - 1]?.content || '').toLowerCase();
   const encoder = new TextEncoder();
 
   let responseText = '';
 
   if (agentType === 'portfolio') {
-    responseText = `### Talha Yaseen's AI Representative (Career Agent)
+    if (lastMessage.includes('why') || lastMessage.includes('hire') || lastMessage.includes('qualif') || lastMessage.includes('benefit')) {
+      responseText = `### 🎯 Why You Should Hire Talha Yaseen
+
+Here is why Talha is a valuable addition to your engineering team:
+
+1. **Accessible Frontend Engineering:** Talha doesn't just build visual grids; he builds semantic layouts matching **WCAG AA accessibility guidelines** (keyboard navigation focus traps, explicit labels, dynamic \`aria-describedby\` announcements).
+2. **Automated Testing Rigor:** Every complex state transition and regex form validator Talha writes is verified by comprehensive **Vitest unit test suites** running in headless DOMs.
+3. **Practical AI Fluency:** Talha understands prompt engineering layers, LLM context integration, and can safely orchestrate AI agents for content and code audits.
+4. **Self-Started Execution:** Completed all weekly capstone milestones at FlyRank ahead of schedule, shipping production code to Vercel.
+
+**Call to Action:** Let's schedule a 15-minute intro Zoom call to run his Vitest code live!`;
+    } else if (lastMessage.includes('project') || lastMessage.includes('planner') || lastMessage.includes('form') || lastMessage.includes('build')) {
+      responseText = `### 🏗️ Talha Yaseen's Featured Projects
+
+Here are the technical case studies in Talha's portfolio:
+
+1. **The React Priority Planner:**
+   * **Problem:** Traditional planners fail to check overdue deadlines correctly due to local client timezone offsets.
+   * **Solution:** React application resetting evaluations at midnight, featuring lazy-loaded state and high-contrast styling.
+   * **Tech:** React, Tailwind CSS, Local Storage.
+
+2. **The Accessible MVC Settings Form:**
+   * **Problem:** Prompt-generated settings forms lack semantic keyboard markers and fail screen reader checks.
+   * **Solution:** Framework-free form validating usernames, emails, and passwords reactively, matching JSDOM validation specs.
+   * **Tech:** Vanilla JS, HTML5, 16 JSDOM Vitest cases.
+
+**Call to Action:** Review the code repositories together on a brief 15-minute Zoom call!`;
+    } else if (lastMessage.includes('contact') || lastMessage.includes('schedule') || lastMessage.includes('zoom') || lastMessage.includes('call') || lastMessage.includes('email')) {
+      responseText = `### 📅 Book a Code Review with Talha
+
+Here is how you can get in touch with Talha Yaseen:
+
+*   **Email:** [talha@example.com](mailto:talha@example.com)
+*   **Booking Option:** Click the **Select Date & Time** calendar button below to schedule a 15-minute Zoom introduction.
+*   **Code Walkthrough:** During the call, Talha can pull up the GitHub repositories and execute his Vitest component tests in real-time.
+
+Let me know if you need any other details!`;
+    } else {
+      responseText = `### 👤 Talha Yaseen's AI Representative (Career Agent)
 
 Hello! I am Talha's personal Career & Technical AI representative. I can answer questions about Talha's front-end expertise, access details about his recent builds, or help you book a call with him.
 
-Since this dashboard is in **Preview Mode** (without a live \`GEMINI_API_KEY\`), here is a summary of the value Talha brings to front-end teams:
+Since this dashboard is currently in **Preview Mode** (without a live \`GEMINI_API_KEY\`), I am responding using localized context.
 
-1. **Accessibility Focus:** Builds products according to **WCAG AA** guidelines from scratch (semantic HTML, focus traps, dynamic \`aria-describedby\` attributes).
-2. **Rigor & Testing:** Backs validation routines with comprehensive **Vitest test suites** running in headless DOMs to capture edge cases before deployments.
-3. **AI Fluency Stack:** Experienced with prompt design ladders, custom context injections, and connecting Large Language Models to web interfaces.
-
-#### Featured Projects in Talha's Portfolio:
-- **React Priority Planner:** Includes timezone-safe date comparison checks and persisted client settings.
-- **Modular MVC Settings Form:** Implements real-time field regex validators and active screen reader warning prompts.
+*   Try asking: *"Why should we hire Talha?"* or *"Tell me about Talha's projects"* to see detailed case studies!
 
 **Call to Action:** 
-If you are looking to hire a disciplined developer, let's schedule a 15-minute intro Zoom call! We can walk through these repositories and run test suites live. Let me know what questions you have about Talha's skills!`;
+If you are looking to hire a disciplined developer, let's schedule a 15-minute intro Zoom call! We can walk through his repositories and run test suites live. Let me know what questions you have!`;
+    }
   } else {
     responseText = `### FlyRank SEO Audit Recommendations
 
-Here is a live simulation of my SEO audit feedback for your request: **"${lastMessage}"**. 
+Here is a live simulation of my SEO audit feedback for your request: **"${messages[messages.length - 1]?.content || ''}"**. 
 
 Since no server-side \`GEMINI_API_KEY\` was detected in the environment variables, I am running in **Preview Simulation Mode**. Here is an actionable checklist:
 
@@ -205,13 +200,19 @@ Feel free to ask follow-up questions! The **Stop** button and **Auto-scroll lock
       let i = 0;
       const interval = setInterval(() => {
         if (i < tokens.length) {
-          controller.enqueue(encoder.encode(tokens[i]));
-          i++;
+          try {
+            controller.enqueue(encoder.encode(tokens[i]));
+            i++;
+          } catch (err) {
+            clearInterval(interval);
+          }
         } else {
           clearInterval(interval);
-          controller.close();
+          try {
+            controller.close();
+          } catch (err) {}
         }
-      }, 50); // Send one token every 50ms
+      }, 30); // Send one token every 30ms
     },
   });
 
