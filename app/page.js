@@ -31,11 +31,13 @@ export default function PortfolioLandingPage() {
   const [input, setInput] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   
-  const chatEndRef = useRef(null);
+  const scrollContainerRef = useRef(null);
   const abortControllerRef = useRef(null);
 
   const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -337,7 +339,7 @@ export default function PortfolioLandingPage() {
           </div>
 
           {/* Messages Container */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-6 space-y-4">
             {messages.map((m, idx) => {
               const isUser = m.role === 'user';
               return (
@@ -369,7 +371,6 @@ export default function PortfolioLandingPage() {
                 </div>
               );
             })}
-            <div ref={chatEndRef} />
           </div>
 
           {/* Input Form Panel */}

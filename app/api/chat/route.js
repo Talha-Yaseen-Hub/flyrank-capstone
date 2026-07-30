@@ -39,8 +39,8 @@ export async function POST(req) {
     const formattedContents = formatGeminiMessages(messages);
     const systemPrompt = agentType === 'portfolio' ? PORTFOLIO_AGENT_INSTRUCTION : AI_CONFIG.systemInstruction;
 
-    // Call the Google Gemini API stream endpoint
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${AI_CONFIG.modelName}:streamGenerateContent?key=${apiKey}`;
+    // Call the Google Gemini API generateContent endpoint
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${AI_CONFIG.modelName}:generateContent?key=${apiKey}`;
     
     const response = await fetch(url, {
       method: 'POST',
@@ -67,68 +67,30 @@ export async function POST(req) {
       });
     }
 
+    const result = await response.json();
+    const fullText = result.candidates?.[0]?.content?.parts?.[0]?.text || 'No response generated.';
+
     const encoder = new TextEncoder();
-    const decoder = new TextDecoder();
+    const tokens = fullText.split(/(\s+)/);
     
     const stream = new ReadableStream({
       async start(controller) {
-        const reader = response.body.getReader();
-        let buffer = '';
-
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            buffer += decoder.decode(value, { stream: true });
-            
-            // Gemini streams dynamic JSON arrays or objects separated by newlines or list markers
-            // We parse complete JSON blocks to stream text back
-            let boundaryIndex;
-            while ((boundaryIndex = buffer.indexOf('\n')) !== -1) {
-              const line = buffer.substring(0, boundaryIndex).trim();
-              buffer = buffer.substring(boundaryIndex + 1);
-
-              if (line.startsWith('[') || line.startsWith(',')) continue;
-              
-              let cleanLine = line;
-              if (cleanLine.endsWith(']')) {
-                cleanLine = cleanLine.substring(0, cleanLine.length - 1);
-              }
-              if (cleanLine.startsWith('{') && cleanLine.endsWith('}')) {
-                try {
-                  const data = JSON.parse(cleanLine);
-                  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                  if (text) {
-                    controller.enqueue(encoder.encode(text));
-                  }
-                } catch (_) {
-                  // Ignore JSON parse errors for incomplete buffer lines
-                }
-              }
-            }
-          }
-
-          // Handle any leftover buffer
-          if (buffer.trim()) {
+        let i = 0;
+        const interval = setInterval(() => {
+          if (i < tokens.length) {
             try {
-              // Strip trailing comma/array markers if any
-              let cleanBuffer = buffer.trim();
-              if (cleanBuffer.startsWith(',')) cleanBuffer = cleanBuffer.substring(1);
-              if (cleanBuffer.endsWith(']')) cleanBuffer = cleanBuffer.substring(0, cleanBuffer.length - 1);
-              
-              const data = JSON.parse(cleanBuffer);
-              const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-              if (text) {
-                controller.enqueue(encoder.encode(text));
-              }
-            } catch (_) {}
+              controller.enqueue(encoder.encode(tokens[i]));
+              i++;
+            } catch (err) {
+              clearInterval(interval);
+            }
+          } else {
+            clearInterval(interval);
+            try {
+              controller.close();
+            } catch (err) {}
           }
-        } catch (err) {
-          controller.error(err);
-        } finally {
-          controller.close();
-        }
+        }, 30); // Send one token every 30ms for smooth stream typing animation
       },
     });
 
