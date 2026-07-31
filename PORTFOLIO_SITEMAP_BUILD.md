@@ -5,6 +5,7 @@
 
 ---
 
+
 ## 1. Portfolio Claim & Flow Definition
 
 *   **The One Person (Target Audience):** A Technical Lead or Engineering Manager who needs a disciplined front-end engineer capable of building accessible, robustly-tested interactive components and integrating AI elements.
