@@ -615,9 +615,9 @@ export function updateFilterFacet(currentParams, facetKey, facetValue) {
               <span className="text-xs font-bold text-zinc-450 dark:text-zinc-500 uppercase block">Sample Prompts:</span>
               {[
                 "Why should we hire Talha?",
-                "How do you add the next case study?",
-                "Tell me about Case Study C",
-                "Detail the React Planner case study."
+                "Run SEO Tool Audit (analyzeSeoHealth)",
+                "Test Tool Error State (error.com)",
+                "How do you add the next case study?"
               ].map((p, idx) => (
                 <button 
                   key={idx}

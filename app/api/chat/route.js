@@ -1,4 +1,5 @@
 import { AI_CONFIG } from '@/lib/ai-config';
+import { analyzeSeoHealthSchema, executeSeoAuditTool } from '@/lib/tools/seo-audit-tool';
 
 export const dynamic = 'force-dynamic';
 
@@ -156,7 +157,14 @@ function handleSimulatedStream(messages, agentType) {
   let responseText = '';
 
   if (agentType === 'portfolio') {
-    if (lastMessage.includes('why') || lastMessage.includes('hire') || lastMessage.includes('qualif') || lastMessage.includes('benefit')) {
+    if (lastMessage.includes('tool') || lastMessage.includes('audit') || lastMessage.includes('analyze') || lastMessage.includes('seo')) {
+      const isErrorCase = lastMessage.includes('error') || lastMessage.includes('fail');
+      responseText = `TOOL_CALL:analyzeSeoHealth:${JSON.stringify({
+        domain: isErrorCase ? 'error.com' : 'flyrank-capstone.vercel.app',
+        targetKeywords: ['React', 'Accessibility', 'Vitest'],
+        includeAccessibilityCheck: true
+      })}`;
+    } else if (lastMessage.includes('why') || lastMessage.includes('hire') || lastMessage.includes('qualif') || lastMessage.includes('benefit')) {
       responseText = `### 🎯 Why You Should Hire Talha Yaseen
 
 Here is why Talha is a valuable addition to your engineering team:
