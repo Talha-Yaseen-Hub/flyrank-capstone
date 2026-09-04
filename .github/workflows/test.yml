@@ -1,0 +1,28 @@
+name: FlyRank FE-09 Vitest & CI Validation Suite
+
+on:
+  push:
+    branches: [ main, feat/settings-v2 ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Run Vitest JSDOM & Component Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci || npm install
+
+      - name: Execute Vitest Component Suite
+        run: npm run test
