@@ -7,6 +7,12 @@ export const metadata = {
   description: 'AI-driven content optimization, search analytics, and citation monitoring.',
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
