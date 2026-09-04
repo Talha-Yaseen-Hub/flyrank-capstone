@@ -694,17 +694,26 @@ export function updateFilterFacet(currentParams, facetKey, facetValue) {
             <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Representative Chat Stream</span>
             {isGenerating && (
               <button 
+                type="button"
                 onClick={handleStop}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium border border-red-200 hover:bg-red-50 text-red-600 dark:border-red-950/30 dark:hover:bg-red-950/20 dark:text-red-400 rounded-lg transition-colors cursor-pointer"
+                aria-label="Stop streaming AI response"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium border border-red-200 hover:bg-red-50 text-red-600 dark:border-red-950/30 dark:hover:bg-red-950/20 dark:text-red-400 rounded-lg transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-500"
               >
-                <Square className="w-3 h-3 fill-current" />
+                <Square className="w-3 h-3 fill-current" aria-hidden="true" />
                 <span>Stop Stream</span>
               </button>
             )}
           </div>
 
-          {/* Messages Container */}
-          <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-6 space-y-4 shadow-inner">
+          {/* Messages Container with Accessible Live Stream Announcer */}
+          <div 
+            ref={scrollContainerRef} 
+            className="flex-1 overflow-y-auto p-6 space-y-4 shadow-inner" 
+            role="log" 
+            aria-live="polite" 
+            aria-atomic="false"
+            aria-label="AI conversation history stream"
+          >
             {messages.map((m, idx) => {
               const isUser = m.role === 'user';
               return (
