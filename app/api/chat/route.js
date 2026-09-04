@@ -2,6 +2,7 @@ import { AI_CONFIG } from '@/lib/ai-config';
 import { analyzeSeoHealthSchema, executeSeoAuditTool } from '@/lib/tools/seo-audit-tool';
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 30; // Max 30s duration for streaming edge functions
 
 const PORTFOLIO_AGENT_INSTRUCTION = `You are the AI Career Agent and Technical Representative for Talha Yaseen, a talented Front-End & AI Engineer Intern at FlyRank.
 Your goal is to represent Talha professionally to Technical Leads, Engineering Managers, and potential collaborators.
