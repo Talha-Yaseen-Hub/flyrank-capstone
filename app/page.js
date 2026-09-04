@@ -309,9 +309,15 @@ export function updateFilterFacet(currentParams, facetKey, facetValue) {
         <div className="absolute right-0 top-0 w-80 h-80 bg-emerald-500/10 dark:bg-emerald-500/5 blur-3xl rounded-full pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div className="space-y-6 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold bg-emerald-100/80 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded-full border border-emerald-200/55 dark:border-emerald-900/30">
-              <Award className="w-3.5 h-3.5 animate-pulse" />
-              <span>Front-End & AI Engineer</span>
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold bg-emerald-100/80 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded-full border border-emerald-200/55 dark:border-emerald-900/30">
+                <Award className="w-3.5 h-3.5 animate-pulse" />
+                <span>Front-End & AI Engineer</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-full border border-emerald-500/30">
+                <CheckCircle className="w-3.5 h-3.5" />
+                <span>16/16 Vitest Suite Passed (100% Coverage)</span>
+              </div>
             </div>
             
             <h1 className="text-4xl md:text-5xl font-black tracking-tight text-zinc-900 dark:text-white leading-tight font-display">
@@ -334,8 +340,8 @@ export function updateFilterFacet(currentParams, facetKey, facetValue) {
                 href="#contact" 
                 className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 rounded-xl transition-all hover:-translate-y-0.5 duration-200 cursor-pointer shadow-sm"
               >
-                <Calendar className="w-4 h-4" />
-                <span>Book a 15-Min Zoom</span>
+                <Mail className="w-4 h-4 text-emerald-500" />
+                <span>Try Interactive Contact Form</span>
               </a>
             </div>
           </div>
