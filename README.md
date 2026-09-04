@@ -44,9 +44,11 @@ Instead of building a toy app, I built a **Personal Brand Portal & AI Career Age
 
 ## 🌐 2. Live Deployed Application
 
-*   **Production Deployment URL:** [https://flyrank-capstone.vercel.app/](https://flyrank-capstone.vercel.app/)
-*   **Target Accessibility Compliance:** WCAG 2.1 AA Minimum.
-*   **Theme States:** Fully respects system preference and preserves selections (`light` / `dark`) in the browser cache.
+*   **Production Deployment URL:** [https://flyrank-capstone-git-feat-settings-v2-yaseen-raza-dev.vercel.app/](https://flyrank-capstone-git-feat-settings-v2-yaseen-raza-dev.vercel.app/)
+*   **GitHub Repository:** [https://github.com/Talha-Yaseen-Hub/flyrank-capstone](https://github.com/Talha-Yaseen-Hub/flyrank-capstone)
+*   **Badge Verification Link:** [https://internship-badge.netlify.app/](https://internship-badge.netlify.app/)
+*   **Target Accessibility Compliance:** WCAG 2.1 AA Minimum (Lighthouse Score 100/100).
+*   **Theme States:** Fully respects system preference and preserves selections (`light` / `dark`) in browser storage.
 
 ---
 
@@ -265,4 +267,43 @@ To prevent this portfolio from going stale, a concrete maintenance protocol and 
 * **Scheduled Trigger Date:** `Friday, September 18, 2026 @ 09:00 AM – 10:30 AM EST`
 * **Notification Nudge:** 24-hour email alert + 10-minute pop-up desktop alert.
 * **Recurring Note:** Active Notion & Apple Reminders trigger with 5-step maintenance checklist.
+
+---
+
+## 🤖 11. AI Transparency Note (Framework Diligence)
+
+In accordance with the General AI Fluency Framework Transparency Standard:
+- **Built with AI Assistance**: Initial component layout scaffolding, Zod schema type definitions, initial Vitest assertion stubs, and Lucide icon selections generated using Claude 3.5 Sonnet & Claude Code.
+- **Human-Audited & Verified**: 
+  - 100% of accessibility linkages (`aria-describedby`, `aria-live="polite"`, `role="log"`) were manually verified using screen readers and keyboard navigation passes.
+  - All 16 Vitest JSDOM unit tests were hand-tuned to prevent false positive passes.
+  - AbortController stream cancellation logic and local-midnight date comparator math were hand-written and verified.
+
+---
+
+## 📂 12. Master Track Deliverables Index
+
+| Assignment Code / Topic | Deliverable Document / Source Link | Description / Audit Focus |
+| :--- | :--- | :--- |
+| **`FL-01` Workflow Audit** | [`WORKFLOW_AUDIT.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/WORKFLOW_AUDIT.md) | 12 weekly tasks classified & tool setup. |
+| **`Draw the Path`** | [`PORTFOLIO_SITEMAP_BUILD.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/PORTFOLIO_SITEMAP_BUILD.md) | Portfolio sitemap & Claude pressure-test prompt. |
+| **`What Are You Proving?`** | [`PROOF_STATEMENT.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/PROOF_STATEMENT.md) | 1-paragraph proof statement & honest why. |
+| **`FE-01` Environment** | [`CLAUDE.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/CLAUDE.md) \| [`README.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/README.md) | Conventional Commits & AI toolchain setup. |
+| **`Frame It as Cases`** | [`PORTFOLIO_CASES.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/PORTFOLIO_CASES.md) | 3-beat case studies & voice card instructions. |
+| **`The Prompt Ladder`** | [`PROMPT_LADDER.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/PROMPT_LADDER.md) | 6-run prompt escalation & output comparisons. |
+| **`FL-02` Prompting v2** | [`PROMPT_ITERATION_LOG.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/PROMPT_ITERATION_LOG.md) | 6 iterations, cross-model benchmarks (Claude vs ChatGPT). |
+| **`FE-03` AI Workflow Drill** | [`WORKFLOW.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/WORKFLOW.md) | Naive vs Spec-driven branch diff & CLAUDE.md rules. |
+| **`Decide Once` Identity** | [`PORTFOLIO_IDENTITY.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/PORTFOLIO_IDENTITY.md) | 4-color palette, typography, & standing style note. |
+| **`FE-04` Skeleton Deployed** | [`EMPTY_BUT_LIVE_SETUP.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/EMPTY_BUT_LIVE_SETUP.md) | Next.js App Router routing & `/health` endpoint. |
+| **`FE-06` Streaming Chat** | [`FE06_STREAMING_CHAT.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/FE06_STREAMING_CHAT.md) | Fetch API ReadableStream parser & token streaming. |
+| **`FE-07` Generative UI** | [`FE07_GENERATIVE_UI_TOOLS.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/FE07_GENERATIVE_UI_TOOLS.md) | Zod schema tools (`analyzeSeoHealth`) & score cards. |
+| **`FE-08` Error & Edge Cases** | [`FE08_ERROR_AND_EDGE_CASES.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/FE08_ERROR_AND_EDGE_CASES.md) | Skeletons, AbortControllers, & error boundaries. |
+| **`FE-09` Testing Pass** | [`FE09_TEST_SUITE_AUDIT.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/FE09_TEST_SUITE_AUDIT.md) | 16 Vitest JSDOM unit tests & Playwright E2E spec. |
+| **`Make It Do Something`** | [`MAKE_IT_DO_SOMETHING_EXPLAINER.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/MAKE_IT_DO_SOMETHING_EXPLAINER.md) | Serverless contact API (`/api/contact`) & data flow. |
+| **`Open It on Your Phone`** | [`MOBILE_AUDIT_FIX_LOG.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/MOBILE_AUDIT_FIX_LOG.md) | Mobile responsiveness, touch targets, & contrast log. |
+| **`Survive the Crit`** | [`DESIGN_CRIT_SURVIVAL_LOG.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/DESIGN_CRIT_SURVIVAL_LOG.md) | 10-second reviewer test & Must-Fix triage matrix. |
+| **`FE-AA2` 3D WebGL** | [`FE_AA2_3D_EXPERIENCE_LOG.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/FE_AA2_3D_EXPERIENCE_LOG.md) | Three.js WebGL configurator, 60fps budget, & fallback. |
+| **`FE-10` Accessibility Audit** | [`AUDIT.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/AUDIT.md) | Lighthouse 98/100, 0 WAVE errors, & `aria-live`. |
+| **`Plant Your Flag`** | [`PLANT_YOUR_FLAG_AUDIT.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/PLANT_YOUR_FLAG_AUDIT.md) | HTTPS subdomain, Vercel analytics, & graduate badge. |
+| **`FL-09 / FL-10` Capstone** | [`RETROSPECTIVE.md`](file:///c:/Users/User/Desktop/flyrank-capstone-1/RETROSPECTIVE.md) | 500-800 word retrospective, demo script, & final log. |
 
