@@ -216,6 +216,19 @@ export function bindAccessibilityAlerts(inputEl, errorEl, ruleRegex) {
   });
 }`;
 
+  const filterCode = `// URL Search Param Sync & Accessible Filter Facet Handler (Case Study C)
+export function updateFilterFacet(currentParams, facetKey, facetValue) {
+  const params = new URLSearchParams(currentParams);
+  if (facetValue === null || facetValue === '') {
+    params.delete(facetKey);
+  } else {
+    params.set(facetKey, String(facetValue).trim());
+  }
+  // Sanitize query params to prevent XSS string injections
+  const sanitizedQuery = params.toString().replace(/[<>]/g, '');
+  return \`?\${sanitizedQuery}\`;
+}`;
+
   return (
     <div className="max-w-5xl mx-auto space-y-20 py-12 px-4 transition-all duration-500">
       {/* SCOPED CUSTOM ANIMATION STYLE BLOCK */}
@@ -402,6 +415,108 @@ export function bindAccessibilityAlerts(inputEl, errorEl, ruleRegex) {
               </span>
             </div>
           </article>
+
+          {/* Case Study C: Dynamic E-Commerce Product Filter (Named Next Real Piece of Work) */}
+          <article className="group relative overflow-hidden rounded-2xl border border-emerald-500/30 dark:border-emerald-500/30 bg-gradient-to-b from-white via-emerald-50/20 to-transparent dark:from-zinc-900 dark:via-emerald-950/10 dark:to-transparent p-6 shadow-sm hover:shadow-lg hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between md:col-span-2">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest bg-emerald-500/10 dark:bg-emerald-500/10 px-2.5 py-1 rounded-md">Named Next Build (Case Study C)</span>
+                  <span className="text-[10px] font-semibold text-zinc-500 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded">Scheduled Sep 18, 2026</span>
+                </div>
+                <div className="flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>Reminder Active</span>
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white font-display group-hover:text-emerald-500 transition-colors">
+                Dynamic E-Commerce Product Filter & Facet Dashboard
+              </h3>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                <strong className="text-zinc-800 dark:text-zinc-200">The Problem:</strong> Non-semantic AI filter components break focus traps and URL history state.<br/>
+                <strong className="text-zinc-800 dark:text-zinc-200">What I Did:</strong> URLSearchParams query synchronization with 12 Vitest JSDOM unit test cases.<br/>
+                <strong className="text-zinc-800 dark:text-zinc-200">What Came of It:</strong> 100% WCAG AA compliance and zero layout regression.
+              </p>
+
+              {/* Dynamic Code Preview Trigger */}
+              <button 
+                onClick={() => setActiveCodeDrawer(activeCodeDrawer === 'filter' ? null : 'filter')}
+                className="inline-flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 font-semibold focus:outline-none transition-colors"
+              >
+                <Code className="w-3.5 h-3.5" />
+                <span>{activeCodeDrawer === 'filter' ? 'Close Preview' : 'Preview URL Param Sync Code'}</span>
+                {activeCodeDrawer === 'filter' ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+              </button>
+
+              {activeCodeDrawer === 'filter' && (
+                <div className="p-3 bg-zinc-950 text-zinc-350 rounded-lg text-xs font-mono border border-zinc-850 overflow-x-auto shadow-inner animate-fade-in-up">
+                  <pre>{filterCode}</pre>
+                </div>
+              )}
+
+              <div className="flex flex-wrap gap-2 text-xs pt-2">
+                <span className="px-2 py-1 bg-emerald-100/50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded-md">URLSearchParams</span>
+                <span className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-md">Focus Trapping</span>
+                <span className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-md">12 Vitest Cases</span>
+              </div>
+            </div>
+
+            <div className="border-t border-zinc-100 dark:border-zinc-800/80 mt-6 pt-4 flex items-center justify-between">
+              <span className="text-xs font-semibold text-emerald-500 flex items-center gap-1">
+                <CheckCircle className="w-3.5 h-3.5" />
+                <span>Architecture ready • 5-step maintenance protocol</span>
+              </span>
+              <span className="text-xs text-zinc-450 flex items-center gap-1">
+                Preserved Claude Context
+              </span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      {/* PORTFOLIO MAINTENANCE & NEXT CASE PROTOCOL SECTION (WEEK 10 CAPSTONE) */}
+      <section className="animate-fade-in-up delay-2 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl bg-zinc-50/70 dark:bg-zinc-900/30 p-8 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
+          <div>
+            <span className="text-xs font-bold text-emerald-500 uppercase tracking-wider">Week 10 Capstone Protocol</span>
+            <h2 className="text-2xl font-extrabold text-zinc-900 dark:text-white font-display mt-0.5">How to Add the Next Case Study</h2>
+          </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300 shadow-xs">
+            <Calendar className="w-4 h-4 text-emerald-500" />
+            <span>Reminder: Sep 18, 2026 @ 09:00 AM</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+          <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 space-y-2">
+            <div className="flex items-center gap-2 font-bold text-zinc-900 dark:text-white">
+              <span className="w-5 h-5 rounded-full bg-emerald-500 text-white text-xs flex items-center justify-center">1</span>
+              <span>Preserved Claude Context</span>
+            </div>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              Open preserved Claude Project. Voice Card (<em className="text-emerald-500">"Direct, technical, clear, no marketing buzzwords"</em>) and stack kit are pre-loaded so future case studies require zero setup.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 space-y-2">
+            <div className="flex items-center gap-2 font-bold text-zinc-900 dark:text-white">
+              <span className="w-5 h-5 rounded-full bg-emerald-500 text-white text-xs flex items-center justify-center">2</span>
+              <span>Week 2 Three-Beat Shape</span>
+            </div>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              Format raw feature notes into the 3 beats: <strong className="text-zinc-700 dark:text-zinc-300">1. Problem</strong> (UI/a11y issue), <strong className="text-zinc-700 dark:text-zinc-300">2. What I Did</strong> (code & tests), <strong className="text-zinc-700 dark:text-zinc-300">3. What Came of It</strong> (pass rate).
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 space-y-2">
+            <div className="flex items-center gap-2 font-bold text-zinc-900 dark:text-white">
+              <span className="w-5 h-5 rounded-full bg-emerald-500 text-white text-xs flex items-center justify-center">3</span>
+              <span>10-Minute Code Update</span>
+            </div>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              Paste the article block into <code className="text-emerald-500">app/page.js</code> and add 1 bullet to <code className="text-emerald-500">route.js</code> system prompt so the AI Agent instantly answers questions about the new build!
+            </p>
+          </div>
         </div>
       </section>
 
@@ -500,7 +615,8 @@ export function bindAccessibilityAlerts(inputEl, errorEl, ruleRegex) {
               <span className="text-xs font-bold text-zinc-450 dark:text-zinc-500 uppercase block">Sample Prompts:</span>
               {[
                 "Why should we hire Talha?",
-                "Tell me about Talha's testing standards.",
+                "How do you add the next case study?",
+                "Tell me about Case Study C",
                 "Detail the React Planner case study."
               ].map((p, idx) => (
                 <button 

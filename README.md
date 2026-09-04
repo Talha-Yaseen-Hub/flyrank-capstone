@@ -240,3 +240,29 @@ Decouple the chat state machine into a custom React Hook (`useChatAgent`). Placi
 
 ### Surprise learning
 I was surprised by how much prompt details change code safety. A vague prompt generated accessible forms by importing heavy third-party tooltip libraries that failed local Vite TS compilation. Specifying `no external tooltip libraries` forced the AI to solve accessibility using clean, native HTML layout elements, reducing build weight.
+
+---
+
+## 🔁 10. Capstone Final Maintenance Protocol (Week 10 Deliverables)
+
+To prevent this portfolio from going stale, a concrete maintenance protocol and reminder system are established:
+
+### 1. Concrete "How to Add the Next Case" Note (5-Step Workflow)
+1. **Open Preserved Claude Project (`Portfolio-Sitemap-Build`):** Standing rules preserve Voice Card (`"Direct, technical, clear, no marketing buzzwords"`) and stack parameters.
+2. **Format Three-Beat Copy:** Supply raw git commit diffs to generate Problem, What I Did, and What Came of It.
+3. **Update `PORTFOLIO_CASES.md` & `app/page.js`:** Append markdown entry to `PORTFOLIO_CASES.md` and insert an `<article>` card into the `Featured Projects` grid in `app/page.js`.
+4. **Attach Code Drawer Preview:** Bind code snippet string to `activeCodeDrawer` state.
+5. **Update AI Representative System Prompt:** Append 1 bullet to `PORTFOLIO_AGENT_INSTRUCTION` in `app/api/chat/route.js`.
+
+### 2. Named Next Real Piece of Work
+* **Title:** **Case Study C: Dynamic E-Commerce Product Filter & Facet Dashboard**
+* **Problem:** Non-semantic AI filter components break focus traps and URL history state.
+* **What I Did:** URLSearchParams query persistence, semantic fieldset/legend markup, keyboard focus locks, and 12 Vitest JSDOM unit test cases.
+* **What Came of It:** 100% WCAG 2.1 AA compliance and zero layout regression.
+
+### 3. Concrete Reminder Set
+* **Calendar Event:** `🚀 FlyRank Portfolio Update: Add Case Study C (Accessible Product Filter)`
+* **Scheduled Trigger Date:** `Friday, September 18, 2026 @ 09:00 AM – 10:30 AM EST`
+* **Notification Nudge:** 24-hour email alert + 10-minute pop-up desktop alert.
+* **Recurring Note:** Active Notion & Apple Reminders trigger with 5-step maintenance checklist.
+

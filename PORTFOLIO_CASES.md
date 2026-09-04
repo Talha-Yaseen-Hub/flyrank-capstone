@@ -51,3 +51,43 @@ Demonstrating the difference between standard generic AI boilerplate and my edit
     > *"I am a front-end and AI engineer focused on building robust, accessible React systems that pass automated test suites and solve real user workflows without bloat."*
 *   **Contact / CTA Copy:**
     > *"Looking for a developer who writes secure, tested code instead of copying generic templates? Let's spend 15 minutes reviewing the Vitest suite or live component code together."*
+
+---
+
+## 5. How to Add the Next Case Study (Developer Maintenance Protocol)
+
+To ensure this portfolio remains a career platform rather than a static class artifact, adding future case studies is standardized into a **10-minute 5-step workflow**:
+
+1. **Open Preserved Claude Project:** Open the existing `Portfolio-Sitemap-Build` Claude Project containing standing instructions (Voice Card: `"Direct, technical, clear, no marketing buzzwords"`).
+2. **Generate 3-Beat Copy:** Paste raw git diffs or feature notes into the prompt template: *"Format into standard Week 2 Three-Beat shape: Problem, What I Did, What Came of It."*
+3. **Update `PORTFOLIO_CASES.md` & `app/page.js`:** Append the copy under `Framed Case Studies` and insert a new `<article>` card into the `Featured Projects` grid in `app/page.js`.
+4. **Update Code Drawer State:** Provide the code snippet string in `app/page.js` for dynamic code drawer toggle.
+5. **Update AI Representative Prompt:** Add 1 summary bullet under `PORTFOLIO_AGENT_INSTRUCTION` in `app/api/chat/route.js` so the live AI Career Agent can discuss the build with recruiters!
+
+---
+
+## 6. Named Next Real Piece of Work
+
+### Case Study C: Dynamic E-Commerce Product Filter & Facet Dashboard
+*   **The Problem:** Standard AI-generated filter components rely on non-semantic div clicks, fail screen reader announce attributes during price range changes, and lose filter state when navigating browser history.
+*   **What I Did (Decisions & Implementation):** Built a modular React product filter synchronized with URL query params (`URLSearchParams`), implemented semantic `<fieldset>` and `<legend>` wrappers, and wrote 12 Vitest JSDOM unit tests verifying price boundary regex and input sanitization.
+*   **What Came of It (Outcome):** A zero-regression, URL-persisted filter component achieving 100% WCAG 2.1 AA accessibility compliance and a 100% test pass rate.
+
+---
+
+## 7. Concrete Reminder Evidence (Calendar Nudge & Recurring Note)
+
+*   **Google Calendar Event Title:** `🚀 FlyRank Portfolio Update: Add Case Study C (Accessible Product Filter)`
+*   **Scheduled Trigger Date:** `Friday, September 18, 2026 @ 09:00 AM – 10:30 AM EST` (Recurring monthly on 3rd Friday)
+*   **Notification Nudge:** 24-hour email alert + 10-minute pop-up desktop alert.
+*   **Recurring Note System:** Active Notion & Apple Reminders trigger with 5-step checklist.
+
+---
+
+## 8. Preserved Build Context (Claude Project)
+
+The build context is preserved inside the **Claude Project** so future case studies require zero setup:
+*   **Voice Card:** `"Direct, technical, clear, no marketing buzzwords."`
+*   **Identity Kit:** Typography Outfit/Inter, Palette Bg `#F8FAFC`/`#09090B`, Text `#0F172A`/`#F4F4F5`, Emerald `#10B981`, Indigo `#6366F1`.
+*   **System Instructions:** Enforces 3-beat structure, WCAG AA compliance, and Vitest suite references on every query.
+

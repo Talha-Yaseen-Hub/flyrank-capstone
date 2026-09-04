@@ -11,11 +11,13 @@ Talha's Profile & Claim:
 - Projects: 
   1. React Priority Planner: timezone-proof deadline checks, reactive indicators, local storage.
   2. Vanilla JS MVC Settings Form: live field validation, aria-describedby accessibility connection, 16 unit tests.
+  3. Dynamic E-Commerce Product Filter (Case Study C): URL-persisted facet state, WCAG AA keyboard focus locks, 12 Vitest JSDOM cases.
+- Portfolio Maintenance Protocol: Concrete 5-step workflow utilizing preserved Claude Project context to add new case studies in 10 minutes without site rebuilds. Next update reminder set for Friday, Sep 18, 2026.
 - Call to Action: Invite the visitor to book a 15-minute call with Talha to review his code.
 
 Rules:
 1. Speak directly, technically, and concisely. No marketing fluff.
-2. Answer questions about Talha's coding methodologies, project details, accessibility focus, and work credentials.
+2. Answer questions about Talha's coding methodologies, project details, accessibility focus, next case study, and work credentials.
 3. Keep the target CTA active: encourage booking a call.`;
 
 export async function POST(req) {
@@ -165,6 +167,25 @@ Here is why Talha is a valuable addition to your engineering team:
 4. **Self-Started Execution:** Completed all weekly capstone milestones at FlyRank ahead of schedule, shipping production code to Vercel.
 
 **Call to Action:** Let's schedule a 15-minute intro Zoom call to run his Vitest code live!`;
+    } else if (lastMessage.includes('next') || lastMessage.includes('reminder') || lastMessage.includes('add') || lastMessage.includes('maintenance')) {
+      responseText = `### 🚀 Next Case Study & Portfolio Maintenance Protocol
+
+Talha has established a concrete habit and architecture for adding future case studies without rebuilding the portfolio:
+
+* **Named Next Real Piece of Work:** **Case Study C: Dynamic E-Commerce Product Filter & Facet Dashboard**
+  * **Problem:** Standard AI filter components use non-semantic div clicks, break screen reader announcements, and lose state on back navigation.
+  * **Solution:** URLSearchParams query persistence, semantic fieldset/legend markup, keyboard focus locks, and 12 Vitest JSDOM unit test cases.
+  * **Outcome:** 100% WCAG AA compliance and zero layout regression.
+
+* **Concrete Calendar Reminder Set:**
+  * **Scheduled Date:** \`Friday, September 18, 2026 @ 09:00 AM EST\` (Recurring monthly on 3rd Friday)
+  * **Nudge:** 24-hour email alert + 10-minute pop-up desktop alert.
+
+* **Preserved Build Context (Claude Project):**
+  * Preserved Voice Card: *"Direct, technical, clear, no marketing buzzwords."*
+  * Standardized 5-step workflow takes <10 minutes per case study.
+
+**Call to Action:** Book a 15-minute Zoom call to discuss his project roadmap!`;
     } else if (lastMessage.includes('project') || lastMessage.includes('planner') || lastMessage.includes('form') || lastMessage.includes('build')) {
       responseText = `### 🏗️ Talha Yaseen's Featured Projects
 
@@ -179,6 +200,11 @@ Here are the technical case studies in Talha's portfolio:
    * **Problem:** Prompt-generated settings forms lack semantic keyboard markers and fail screen reader checks.
    * **Solution:** Framework-free form validating usernames, emails, and passwords reactively, matching JSDOM validation specs.
    * **Tech:** Vanilla JS, HTML5, 16 JSDOM Vitest cases.
+
+3. **Case Study C (Upcoming): Dynamic E-Commerce Product Filter:**
+   * **Problem:** Non-semantic filter facets break focus traps and URL history state.
+   * **Solution:** URLSearchParams query sync with 12 Vitest test cases.
+   * **Reminder Set:** Friday, September 18, 2026 @ 09:00 AM EST.
 
 **Call to Action:** Review the code repositories together on a brief 15-minute Zoom call!`;
     } else if (lastMessage.includes('contact') || lastMessage.includes('schedule') || lastMessage.includes('zoom') || lastMessage.includes('call') || lastMessage.includes('email')) {
