@@ -869,6 +869,37 @@ export function updateFilterFacet(currentParams, facetKey, facetValue) {
           </button>
         </form>
       </section>
+
+      {/* 6. FLYRANK GRADUATE BADGE & LAUNCH FOOTER */}
+      <footer className="pt-8 border-t border-zinc-200/80 dark:border-zinc-800/80 text-center space-y-4 max-w-2xl mx-auto">
+        <div className="inline-flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-zinc-900 border border-zinc-800 text-white shadow-lg w-full">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-500 flex items-center justify-center text-white font-black text-sm shadow-md shrink-0">
+              FR
+            </div>
+            <div className="text-left space-y-0.5">
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-sm text-white font-display">FlyRank AI Engineering Graduate</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-semibold">Verified Badge</span>
+              </div>
+              <p className="text-xs text-zinc-400">
+                Front-End & AI Engineering Track • Class of 2026
+              </p>
+            </div>
+          </div>
+          <a 
+            href="https://internship-badge.netlify.app/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="px-3.5 py-2 text-xs font-semibold text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 rounded-xl bg-emerald-500/10 transition-colors shrink-0"
+          >
+            Verify Badge ↗
+          </a>
+        </div>
+        <p className="text-xs text-zinc-500 dark:text-zinc-500">
+          © 2026 Talha Yaseen. Deployed live over HTTPS on Vercel Free-Tier Infrastructure.
+        </p>
+      </footer>
     </div>
   );
 }
