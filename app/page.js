@@ -48,6 +48,47 @@ export default function PremiumPortfolioLandingPage() {
   // 3. Code Drawer State
   const [activeCodeDrawer, setActiveCodeDrawer] = useState(null); // null | 'planner' | 'mvc'
 
+  // 4. Contact & Lead Capture Form State
+  const [contactData, setContactData] = useState({ name: '', email: '', message: '' });
+  const [contactSubmitting, setContactSubmitting] = useState(false);
+  const [contactResponse, setContactResponse] = useState(null); // null | { success: boolean, message: string, id?: string }
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    if (!contactData.name || !contactData.email || !contactData.message) return;
+    setContactSubmitting(true);
+    setContactResponse(null);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(contactData)
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setContactResponse({
+          success: true,
+          message: data.message || 'Submission successful!',
+          id: data.submissionId
+        });
+        setContactData({ name: '', email: '', message: '' });
+      } else {
+        setContactResponse({
+          success: false,
+          message: data.error || 'Failed to submit form. Please check details.'
+        });
+      }
+    } catch (err) {
+      setContactResponse({
+        success: false,
+        message: 'Network error. Could not connect to API server.'
+      });
+    } finally {
+      setContactSubmitting(false);
+    }
+  };
+
   const scrollToBottom = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
@@ -721,30 +762,91 @@ export function updateFilterFacet(currentParams, facetKey, facetValue) {
         </div>
       </section>
 
-      {/* 5. CONTACT & CALL TO ACTION */}
-      <section id="contact" className="p-8 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl bg-zinc-50 dark:bg-zinc-900/30 text-center max-w-2xl mx-auto space-y-6">
-        <Mail className="w-10 h-10 text-emerald-500 mx-auto animate-bounce" />
-        <h3 className="text-2xl font-bold text-zinc-900 dark:text-white font-display">Schedule an Intro Call</h3>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 leading-relaxed">
-          Looking for a developer who writes secure, tested code instead of copying generic templates? Let's spend 15 minutes reviewing my unit test coverage or running Vitest locally.
-        </p>
-        
-        <div className="pt-2 flex flex-col sm:flex-row gap-4 justify-center">
-          <a 
-            href="mailto:talha@example.com" 
-            className="inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-white bg-zinc-900 hover:bg-zinc-800 dark:bg-emerald-500 dark:hover:bg-emerald-600 rounded-xl transition-all hover:-translate-y-0.5 duration-200 cursor-pointer shadow-md"
-          >
-            <Mail className="w-4 h-4" />
-            <span>talha@example.com</span>
-          </a>
-          <button 
-            onClick={() => alert("Bookings scheduled directly via Cal.com / Calendly integrations. Placeholder activated.")}
-            className="inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 rounded-xl transition-all hover:-translate-y-0.5 duration-200 cursor-pointer shadow-sm"
-          >
-            <Calendar className="w-4 h-4" />
-            <span>Select Date & Time</span>
-          </button>
+      {/* 5. CONTACT & LEAD CAPTURE FORM */}
+      <section id="contact" className="p-8 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl bg-zinc-50 dark:bg-zinc-900/30 max-w-2xl mx-auto space-y-6">
+        <div className="text-center space-y-3">
+          <Mail className="w-10 h-10 text-emerald-500 mx-auto" />
+          <h3 className="text-2xl font-bold text-zinc-900 dark:text-white font-display">Get in Touch / Inquiry Form</h3>
+          <p className="text-sm text-zinc-650 dark:text-zinc-400 leading-relaxed max-w-md mx-auto">
+            Send a direct message through my free-tier serverless API. Submissions are processed and validated end-to-end.
+          </p>
         </div>
+
+        {contactResponse && (
+          <div className={`p-4 rounded-xl text-sm ${
+            contactResponse.success 
+              ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400' 
+              : 'bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400'
+          }`}>
+            <p className="font-semibold">{contactResponse.message}</p>
+            {contactResponse.id && (
+              <p className="text-xs opacity-80 mt-1 font-mono">Submission ID: {contactResponse.id}</p>
+            )}
+          </div>
+        )}
+
+        <form onSubmit={handleContactSubmit} className="space-y-4 text-left">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="contact-name" className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">
+                Full Name
+              </label>
+              <input
+                id="contact-name"
+                type="text"
+                required
+                placeholder="e.g. Sarah Jenkins"
+                value={contactData.name}
+                onChange={e => setContactData(prev => ({ ...prev, name: e.target.value }))}
+                className="w-full px-4 py-2.5 text-sm border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-zinc-900 dark:text-white"
+              />
+            </div>
+            <div>
+              <label htmlFor="contact-email" className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">
+                Email Address
+              </label>
+              <input
+                id="contact-email"
+                type="email"
+                required
+                placeholder="e.g. sarah@company.com"
+                value={contactData.email}
+                onChange={e => setContactData(prev => ({ ...prev, email: e.target.value }))}
+                className="w-full px-4 py-2.5 text-sm border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-zinc-900 dark:text-white"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="contact-message" className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">
+              Message / Project Inquiry
+            </label>
+            <textarea
+              id="contact-message"
+              required
+              rows={4}
+              placeholder="Tell me about your project, timeline, or open role..."
+              value={contactData.message}
+              onChange={e => setContactData(prev => ({ ...prev, message: e.target.value }))}
+              className="w-full px-4 py-2.5 text-sm border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-zinc-900 dark:text-white"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={contactSubmitting}
+            className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm rounded-xl disabled:opacity-50 transition flex items-center justify-center gap-2 cursor-pointer shadow-md"
+          >
+            {contactSubmitting ? (
+              <span>Submitting Message...</span>
+            ) : (
+              <>
+                <Send className="w-4 h-4" />
+                <span>Send Submission to API</span>
+              </>
+            )}
+          </button>
+        </form>
       </section>
     </div>
   );
