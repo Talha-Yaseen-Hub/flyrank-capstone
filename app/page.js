@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Hero3DExperience from '@/components/Hero3DExperience';
 import { 
   Sparkles, 
   Send, 
@@ -351,6 +352,11 @@ export function updateFilterFacet(currentParams, facetKey, facetValue) {
             TY
           </div>
         </div>
+      </section>
+
+      {/* 3D INTERACTIVE EXPERIENCE & CONFIGURATOR (FE-AA2) */}
+      <section className="animate-fade-in-up delay-1">
+        <Hero3DExperience />
       </section>
 
       {/* 2. CASE STUDIES & ACCORDION CODE DRAWER */}
