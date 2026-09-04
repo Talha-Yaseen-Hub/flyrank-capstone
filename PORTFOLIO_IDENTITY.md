@@ -19,6 +19,7 @@
 
 ---
 
+
 ## 🏷️ Monogram Logo & Favicon
 
 I have generated a clean, simple circular monogram logo featuring my initials `TY` in a bold geometric Outfit style with an emerald accent dot:

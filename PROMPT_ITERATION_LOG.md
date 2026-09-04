@@ -1,7 +1,7 @@
 # FlyRank AI Fluency: Prompt Iteration Log
-**Intern Name:** Talha Yaseen  
+**Intern Name:** Talha Yaseen 
+**Phase:** Foundations (Week 3 Prompt Engineering) 
 **Track:** Front-End & AI Engineering  
-**Phase:** Foundations (Week 3 Prompt Engineering)  
 
 ---
 

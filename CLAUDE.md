@@ -5,6 +5,7 @@
 - **Styling**: Vanilla CSS (Modern CSS variables, Flexbox/Grid)
 - **Tooling**: Vite (for local development and bundling)
 
+
 ## Development Commands
 - **Start local dev server**: `npm run dev`
 - **Build production bundle**: `npm run build`
