@@ -3,8 +3,42 @@ import Navigation from '@/components/Navigation';
 import '@/app/globals.css';
 
 export const metadata = {
-  title: 'FlyRank AI — SEO & Search Visibility Dashboard',
-  description: 'AI-driven content optimization, search analytics, and citation monitoring.',
+  metadataBase: new URL('https://flyrank-capstone-git-feat-settings-v2-yaseen-raza-dev.vercel.app'),
+  title: {
+    default: 'Talha Yaseen — Front-End & AI Engineer | FlyRank Capstone',
+    template: '%s | Talha Yaseen Portfolio'
+  },
+  description: 'Portfolio of Talha Yaseen: WCAG AA compliant, responsive React application backed by 100% statement-coverage Vitest suites and serverless AI integrations.',
+  keywords: ['Front-End Engineer', 'React Developer', 'AI Engineering', 'Vitest', 'Next.js', 'Accessibility', 'WCAG AA', 'TypeScript'],
+  authors: [{ name: 'Talha Yaseen' }],
+  creator: 'Talha Yaseen',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://flyrank-capstone-git-feat-settings-v2-yaseen-raza-dev.vercel.app',
+    title: 'Talha Yaseen — Front-End & AI Engineer',
+    description: 'Accessible, responsive React applications with 100% test coverage and AI agent integrations.',
+    siteName: 'Talha Yaseen Portfolio & FlyRank AI Capstone',
+    images: [
+      {
+        url: '/og-preview.png',
+        width: 1200,
+        height: 630,
+        alt: 'Talha Yaseen — Front-End & AI Engineer Portfolio Preview',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Talha Yaseen — Front-End & AI Engineer',
+    description: 'Accessible React components backed by 100% test coverage and AI agent integrations.',
+    creator: '@talhayaseen',
+    images: ['/og-preview.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export const viewport = {
