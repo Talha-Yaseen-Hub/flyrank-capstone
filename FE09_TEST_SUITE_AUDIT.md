@@ -2,7 +2,7 @@
 **Intern Name:** Talha Yaseen  
 **Track:** Frontend AI Engineering  
 **Assignment:** FE-09 (Week 6 / Build Polish Phase)  
-**CI Workflow File:** [`.github/workflows/test.yml`](file:///c:/Users/User/Desktop/flyrank-capstone-1/.github/workflows/test.yml)  
+**CI Workflow File:** [`docs/workflows/test.yml`](file:///c:/Users/User/Desktop/flyrank-capstone-1/docs/workflows/test.yml)  
 **Vitest Component Test File:** [`playground/src/components/SettingsForm.test.jsx`](file:///c:/Users/User/Desktop/flyrank-capstone-1/playground/src/components/SettingsForm.test.jsx)  
 **Live Application:** [https://flyrank-capstone.vercel.app/](https://flyrank-capstone.vercel.app/)  
 **GitHub Repository:** [https://github.com/Talha-Yaseen-Hub/flyrank-capstone](https://github.com/Talha-Yaseen-Hub/flyrank-capstone)
